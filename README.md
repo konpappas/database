@@ -20,7 +20,7 @@ Konstantinos Pappas
 
 ## Βήματα για εγκατάσταση εφαρμογής
 1. Ανοίγουμε στο MySQL Workbench τα sql scipts που είναι μέσα στον φάκελο sql_code. Δημιουργούμε τη βάση και κάνουμε insert τα δεδομένα στους πίνακες.
-2. Eπεξεργαζόμαστε το .env.localhost.txt εντός του φακέλου app, σύμφωνα με τις οδηγίες παρακάτω στο πεδίο #### custom-env
+2. Eπεξεργαζόμαστε το .env.localhost.txt εντός του φακέλου app, σύμφωνα με τις οδηγίες παρακάτω στην παράγραφο ```custom-env```.
 3. Στη γραμμή εντολών κατευθυνόμαστε στο directory του app με cd command.
 4. Kάνουμε npm start για την εκκίνηση του Server.
 5. Eπισκεπτόμαστε την σελίδα http://localhost:PORT/, όπου PORT ό,τι έχουμε γράψει στο SERVER_PORT στο .env.localhost. 
