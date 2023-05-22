@@ -28,7 +28,8 @@ Konstantinos Pappas
 ### custom-env 
 1. Ανοίγουμε το .env.localhost.txt
 2. Aλλάζουμε το περιεχόμενο του για να δουλεύει στο σύστημά μας
- ```.env.localhost``` content
+
+ ```.env.localhost``` content:
 ```
 SERVER_PORT=3000
 DB_HOST=localhost
