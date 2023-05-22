@@ -1,0 +1,3 @@
+[submodule "Desktop/shmmy/databases/project_2023/app"]
+	path = Desktop/shmmy/databases/project_2023/app
+	url = https://github.com/ntua-el14905/database.git
