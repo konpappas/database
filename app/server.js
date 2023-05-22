@@ -1,3 +1,4 @@
+//Test
 //const connection = require('./utils/database');
 /*app.get('/', function(req, res) {
     let sql = "SELECT * FROM EMPLOYEE_INFO";
