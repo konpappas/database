@@ -9,6 +9,10 @@ Giannis Iliopoulos
 
 Konstantinos Pappas
 
+# Dependencies:
+1. NodeJS
+2. MySQL for Windows
+
 # NodeJS Dependencies:
 
 1. [express](https://www.npmjs.com/package/express) 
@@ -22,8 +26,9 @@ Konstantinos Pappas
 1. Ανοίγουμε στο MySQL Workbench τα sql scipts που είναι μέσα στον φάκελο sql_code. Δημιουργούμε τη βάση και κάνουμε insert τα δεδομένα στους πίνακες.
 2. Eπεξεργαζόμαστε το .env.localhost.txt εντός του φακέλου app, σύμφωνα με τις οδηγίες παρακάτω στην παράγραφο ```custom-env```.
 3. Στη γραμμή εντολών κατευθυνόμαστε στο directory του app με cd command.
-4. Kάνουμε npm start για την εκκίνηση του Server.
-5. Eπισκεπτόμαστε την σελίδα http://localhost:PORT/, όπου PORT ό,τι έχουμε γράψει στο SERVER_PORT στο .env.localhost. 
+4. Τρέχουμε την εντολή npm install για να εγκαταστήσουμε όλα τα dependencies.
+5. Kάνουμε npm start για την εκκίνηση του Server.
+6. Eπισκεπτόμαστε την σελίδα http://localhost:PORT/, όπου PORT ό,τι έχουμε γράψει στο SERVER_PORT στο .env.localhost. 
 
 ### custom-env 
 1. Ανοίγουμε το .env.localhost.txt
