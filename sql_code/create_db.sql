@@ -102,5 +102,6 @@ ADD FOREIGN KEY (author_id) REFERENCES Author(author_id);
 
 ALTER TABLE User
 ADD COLUMN age INT NOT NULL,
-ADD FOREIGN KEY (school_id) REFERENCES School(school_id),
-ADD CONSTRAINT approved_user CHECK (user_type = 'administrator' OR (user_type <> 'administrator' AND approved = 1));
+ADD FOREIGN KEY (school_id) REFERENCES School(school_id)
+#ADD CONSTRAINT approved_user CHECK (user_type = 'administrator' OR (user_type <> 'administrator' AND approved = 1));
+

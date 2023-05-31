@@ -10,11 +10,7 @@
     <link rel="stylesheet" href="assets/css/styles.css">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
 </head>
-<style>
-    body {
-        background: linear-gradient(rgba(238, 235, 235, 0.8), rgba(0, 0, 0, .5));
-    }
-</style>
+
 <body>
     
     <div id="editModal" class="modal fade" role="dialog">
@@ -35,7 +31,9 @@
                         <input type="text" name="entry_date" id="entry_date"></br>
                         <input type="text" name="summary" id="summary"></br>
                         <input type="text" name="available_copies" id="available_copies"></br>
-                        <input type="text" name="image" id="image"></br>
+                        <!--<input type="text" name="image" id="image"></br>-->
+                        <input type="text" name="image" id="image" onchange="previewImage(this)"><br>
+                        <img id="image-preview" src="" alt="Image Preview"><br>
                         <input type="text" name="language" id="language"></br>
                         <input type="text" name="keywords" id="keywords"></br>
                         <input type="text" name="category_id" id="category_id"></br>
@@ -63,6 +61,25 @@
                         <h1 style="margin-top: 5rem;">No Books found!</h1>
                     <% } else { %>
                         <div class="table-responsive">
+                             <!-- Add the search form with dropdown list -->
+                             <form action="/books" method="GET" class="mb-4">
+                                <div class="form-row">
+                                    <div class="col-md-4 mb-3">
+                                        <label for="searchFilter">Search Filter:</label>
+                                        <select class="form-control" name="searchFilter" id="searchFilter">
+                                            <option value="title">Title</option>
+                                            <option value="category_id">Category</option>
+                                            <option value="author_id">Author</option>
+                                            <option value="available_copies">Number of Copies</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-8 mb-3">
+                                        <label for="searchTerm">Search Term:</label>
+                                        <input type="text" class="form-control" name="searchTerm" id="searchTerm">
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Search</button>
+                            </form>
                             <table class="table">
                                 <thead>
                                     <tr>
@@ -137,6 +154,14 @@
 
             document.getElementById("modal-form").action = "/books/update/" + row.dataset.isbn;
             document.getElementById("modal-form").method = "POST";
+        }
+            function previewImage(input) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                document.getElementById("image-preview").src = e.target.result;
+            };
+            reader.readAsDataURL(input.files[0]);
+    
         }
     </script>
 
