@@ -1,6 +1,8 @@
 const { pool } = require('../utils/database');
 const { exec } = require('child_process');
 
+const user = process.env.DB_USER;
+const database = process.env.DB;
 
 exports.getLanding = (req, res, next) => {
     /* check for messages in order to show them when rendering the page */
@@ -35,7 +37,7 @@ exports.getAddSchool = (req, res, next) => {
    // Code to create a backup of the database
     // You can use the child_process module to execute a backup command
     
-    exec('mysqldump -u root schoollibrary > C:\\Users\\USER\\Desktop\\shmmy\\databases\\project_2023\\database\\app\\backup.sql', (error, stdout, stderr) => {
+    exec(`mysqldump -u ${user} ${database} > backup.sql`, (error, stdout, stderr) => {
       if (error) {
           console.error(`Backup error: ${error.message}`);
           res.status(500).send('Backup failed');
@@ -50,7 +52,7 @@ exports.getAddSchool = (req, res, next) => {
         // Code to restore the database from a backup
     // You can use the child_process module to execute a restore command
     
-    exec('mysql -u root schoollibrary < C:\\Users\\USER\\Desktop\\shmmy\\databases\\project_2023\\database\\app\\backup.sql', (error, stdout, stderr) => {
+    exec(`mysql -u ${user} ${database} < backup.sql`, (error, stdout, stderr) => {
       if (error) {
           console.error(`Restore error: ${error.message}`);
           res.status(500).send('Restore failed');

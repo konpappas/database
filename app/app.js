@@ -5,7 +5,6 @@ const cookie =require('cookie-parser');
 const ejs= require ('ejs');
 const multer = require('multer');
 const async = require ('async');
-const nodmailer = require ('nodemailer');
 const crypto = require ('crypto');
 const expressValidator = require ('express-validator');
 const  sweetalert = require('sweetalert2');
