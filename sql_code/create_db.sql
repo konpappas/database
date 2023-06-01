@@ -95,7 +95,9 @@ ADD FOREIGN KEY (isbn) REFERENCES Book(isbn);
 
 ALTER TABLE Book
 ADD COLUMN sec_category_id INT,
+ADD COLUMN school_id INT,
 ADD CONSTRAINT available_copies CHECK (available_copies >= 0),
+ADD FOREIGN KEY (school_id) REFERENCES School(school_id),
 ADD FOREIGN KEY (category_id) REFERENCES Category(category_id),
 ADD FOREIGN KEY (sec_category_id) REFERENCES Category(category_id),
 ADD FOREIGN KEY (author_id) REFERENCES Author(author_id);

@@ -51,3 +51,58 @@ INSERT INTO Reservation VALUES ('50','2023-06-01','45085','45','195996972-2');
 
 UPDATE reservation 
 SET expiration_date = DATE_ADD(reservation_date, INTERVAL 7 DAY);
+
+UPDATE reservation
+set user_id = (select user_id 
+		from user
+        where school_id = 1
+        order by rand()
+        limit 1)
+WHERE isbn IN (select distinct isbn
+		from book b
+        join user u on u.school_id = b.school_id
+        where u.school_id = 1);
+        
+UPDATE reservation
+set user_id = (select user_id 
+		from user
+        where school_id = 2
+        order by rand()
+        limit 1)
+WHERE isbn IN (select distinct isbn
+		from book b
+        join user u on u.school_id = b.school_id
+        where u.school_id = 2);
+        
+UPDATE reservation
+set user_id = (select user_id 
+		from user
+        where school_id = 3
+        order by rand()
+        limit 1)
+WHERE isbn IN (select distinct isbn
+		from book b
+        join user u on u.school_id = b.school_id
+        where u.school_id = 3);
+        
+UPDATE reservation
+set user_id = (select user_id 
+		from user
+        where school_id = 4
+        order by rand()
+        limit 1)
+WHERE isbn IN (select distinct isbn
+		from book b
+        join user u on u.school_id = b.school_id
+        where u.school_id = 4);
+        
+UPDATE reservation
+set user_id = (select user_id 
+		from user
+        where school_id = 5
+        order by rand()
+        limit 1)
+WHERE isbn IN (select distinct isbn
+		from book b
+        join user u on u.school_id = b.school_id
+        where u.school_id = 5);
