@@ -62,4 +62,10 @@ exports.getAddSchool = (req, res, next) => {
       res.status(200).send('Database restored');
   });
   } 
+
+  exports.getBorrowSchool = (req, res, next) => {
+    res.render('borrowschool.ejs',{
+        pageTitle: "View borrows per school"
+    })
+  }
   

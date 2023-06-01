@@ -10,24 +10,27 @@ exports.getBooks = (req, res, next) => {
     const { searchFilter, searchTerm } = req.query;
     const sqlParams = [];
   
-    let sqlQuery = 'SELECT * FROM book';
+    let sqlQuery = `SELECT b.isbn, b.title, b.publisher, b.pages, b.summary, b.available_copies, b.image, b.language, b.keywords, c.name, CONCAT(a.first_name, ' ', a.last_name) AS author_name
+                    FROM book b
+                    JOIN author a ON b.author_id = a.author_id
+                    JOIN category c ON b.category_id = c.category_id `;
   
     if (searchFilter && searchTerm) {
       switch (searchFilter) {
         case 'title':
-          sqlQuery += ' WHERE title LIKE ?';
+          sqlQuery += ' WHERE b.title LIKE ?';
           sqlParams.push(`%${searchTerm}%`);
           break;
-        case 'category_id':
-          sqlQuery += ' WHERE category_id LIKE ?';
+        case 'name':
+          sqlQuery += ' WHERE c.name LIKE ?';
           sqlParams.push(`%${searchTerm}%`);
           break;
-        case 'author_id':
-          sqlQuery += ' WHERE author_id LIKE ?';
-          sqlParams.push(`%${searchTerm}%`);
+        case 'author_name':
+          sqlQuery += ` WHERE CONCAT(a.first_name, ' ', a.last_name) LIKE ?`;
+          sqlParams.push(searchTerm);
           break;
         case 'available_copies':
-          sqlQuery += ' WHERE number_of_copies = ?';
+          sqlQuery += ' WHERE b.available_copies = ?';
           sqlParams.push(searchTerm);
           break;
       }
