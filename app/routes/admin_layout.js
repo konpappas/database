@@ -9,6 +9,7 @@ router.get('/restore', AdminlayoutController.restoreBackUp);
 router.get('/operators', AdminlayoutController.getAdminOperator);
 router.get('/schools', AdminlayoutController.getSchools);
 router.get('/schools-add', AdminlayoutController.getAddSchool);
+router.get('/borrow', AdminlayoutController.getBorrowSchool);
 
 
 module.exports = router;

@@ -68,8 +68,8 @@
                                         <label for="searchFilter">Search Filter:</label>
                                         <select class="form-control" name="searchFilter" id="searchFilter">
                                             <option value="title">Title</option>
-                                            <option value="category_id">Category</option>
-                                            <option value="author_id">Author</option>
+                                            <option value="name">Category</option>
+                                            <option value="author_name">Author</option>
                                             <option value="available_copies">Number of Copies</option>
                                         </select>
                                     </div>
@@ -92,8 +92,8 @@
                                         <th>Image</th>
                                         <th>Language</th>
                                         <th>Keywords</th>
-                                        <th>Category ID</th>
-                                        <th>Author ID</th>
+                                        <th>Category Name</th>
+                                        <th>Author Name</th>
                                        
                                         <th></th>
                                     </tr>
@@ -110,8 +110,8 @@
                                             <td><%= Book.image %></td>
                                             <td><%= Book.language %></td>
                                             <td><%= Book.keywords %></td>
-                                            <td><%= Book.category_id %></td>
-                                            <td><%= Book.author_id %></td>
+                                            <td><%= Book.name %></td>
+                                            <td><%= Book.author_name %></td>
                                             <td>
                                                 <a type="button" style="cursor: pointer" onclick="setModalFields(this)"
                                                     data-toggle="modal" data-isbn="<%= Book.isbn %>" 
@@ -119,7 +119,7 @@
                                                     data-pages="<%= Book.pages %>" data-summary="<%= Book.summary %>"
                                                     data-available_copies="<%= Book.available_copies %>" data-image="<%= Book.image %>"
                                                     data-language="<%= Book.language %>" data-keywords="<%= Book.keywords %>"
-                                                    data-category_id="<%= Book.category_id %>" data-author_id="<%= Book.author_id %>"
+                                                    data-category_id="<%= Book.name %>" data-author_id="<%= Book.author_name %>"
                                                     data-target="#editModal">
                                                     <i class="fa fa-edit"></i>
                                                 </a>
