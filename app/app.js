@@ -22,7 +22,7 @@ const schools = require('./routes/schools');
 const reviews = require('./routes/reviews');*/
 const borrow = require('./routes/borrow');
 const books = require('./routes/books');
-//const authors = require('./routes/authors');
+const authors = require('./routes/authors');
 //const categories = require('./routes/categories');
 //const queries = require('./routes/queries');
 const login = require('./routes/login');
@@ -66,8 +66,8 @@ app.use('/schools', schools);
 app.use('/reviews', reviews);*/
 app.use('/borrow', borrow);
 app.use('/books', books);
-/*app.use('/authors', authors);
-app.use('/categories', categories);
+app.use('/authors', authors);
+/*app.use('/categories', categories);
 app.use('/queries', queries);*/
 app.use('/login', login);
 app.use('/signup', signup);

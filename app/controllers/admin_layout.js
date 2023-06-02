@@ -3,7 +3,9 @@ const { exec } = require('child_process');
 
 const user = process.env.DB_USER;
 const database = process.env.DB;
-const pwd = process.env.DB_PASS
+
+const pwd = process.env.DB_PASS;
+
 
 exports.getLanding = (req, res, next) => {
     /* check for messages in order to show them when rendering the page */
@@ -70,3 +72,14 @@ exports.getAddSchool = (req, res, next) => {
     })
   }
   
+exports.getBorrowYoung = (req, res, next) => {
+    res.render('borrowsyoung.ejs',{
+        pageTitle: "View young professors with descending order according to borrow count"
+    })
+  }
+
+  exports.getAuthor5Books = (req, res, next) => {
+    res.render('authorsbooks.ejs',{
+        pageTitle: "View QUERY 3.1.7"
+    })
+  }
