@@ -19,7 +19,9 @@ exports.postlogin = async(req, res) => {
                 
                 const user = results[0]; // Assuming the first row of the results contains the user details
                 const role = user.user_type;
+                //const school = user.school_id;
                 //const role = req.session.user_type;
+                req.session.schoolId = user.school_id;// Store the school ID in session
                 const approved = user.approved;
                 if(role === 'administrator')
                         res.redirect('/admin_layout');
