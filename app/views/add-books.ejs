@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title> <%= pageTitle %> </title>
+    <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/assets/css/styles.css">
+</head>
+
+<body>
+    
+    <%- include("includes/navbar_operator.ejs")%>
+    <div class="container">
+        <div class="row" id="row">
+            <div class="col-md-12">
+                <form class="form-horizontal" name="Books-form" action="/books/add" method="POST">
+                    <div class="form-group col-sm-3 mb-3">
+                        <label for="name">ISBN</label>
+                        <input type="text" class="form-control" name="isbn" placeholder="Enter ISBN">
+                    </div>
+                    <div class="form-group col-sm-3 mb-3">
+                        <label for="address">Title</label>
+                        <input type="text" class="form-control" name="title" placeholder="Enter Title">
+                    </div>
+                    <div class="form-group col-sm-3 mb-3">
+                        <label for="city">Publisher</label>
+                        <input type="text" class="form-control" name="publisher" placeholder="Enter Publisher">
+                    </div>
+                    <div class="form-group col-sm-3 mb-3">
+                        <label for="email">Pages</label>
+                        <input type="text" class="form-control" name="pages" placeholder="Enter Pages">
+                    </div>
+                    <div class="form-group col-sm-3 mb-3">
+                        <label for="phone">Summary</label>
+                        <input type="text" class="form-control" name="summary" placeholder="Enter Summary">
+                    </div>
+                    <div class="form-group col-sm-3 mb-3">
+                        <label for="director_name">Available Copies</label>
+                        <input type="text" class="form-control" name="available_copies" placeholder="Enter Available Copies">
+                    </div>
+                    <div class="form-group col-sm-3 mb-3">
+                        <label for="library_operator_name">Image</label>
+                        <input type="text" class="form-control" name="image" placeholder="Enter Image">
+                    </div>
+                    <div class="form-group col-sm-3 mb-3">
+                        <label for="address">Language</label>
+                        <input type="text" class="form-control" name="language" placeholder="Enter Language">
+                    </div>
+                    <div class="form-group col-sm-3 mb-3">
+                        <label for="address">Keywords</label>
+                        <input type="text" class="form-control" name="keywords" placeholder="Enter Keywords">
+                    </div>
+                    <div class="form-group col-sm-3 mb-3">
+                        <label for="address">Category ID</label>
+                        <input type="text" class="form-control" name="category_id" placeholder="Enter Category ID">
+                    </div>
+                    <div class="form-group col-sm-3 mb-3">
+                        <label for="address">Secondary Category ID</label>
+                        <input type="text" class="form-control" name="sec_category_id" placeholder="Enter Secondary Category ID">
+                    </div>
+                    <div class="form-group col-sm-3 mb-3">
+                        <label for="address">Author ID</label>
+                        <input type="text" class="form-control" name="author_id" placeholder="Enter Author ID">
+                    </div>
+                    <div class="form-group col-sm-3 mb-3">
+                        <label for="address">School ID</label>
+                        <input type="text" class="form-control" name="school_id" placeholder="Enter School ID">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-submit-custom">ADD</button>
+                </form>
+        </div>
+    </div>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+</body>
+
+</html>
