@@ -15,3 +15,15 @@ exports.getOperatorUser = (req, res, next) =>{
         pageTitle: "User Approval"
     })
 }
+
+exports.getOperatorBook = (req, res, next) =>{
+    res.render('books.ejs',{
+        pageTitle: "Book Management"
+    })
+}
+
+exports.getAddBook = (req, res, next) => {
+    res.render('add-books.ejs',{
+        pageTitle: "Insert a book in library"
+    })
+}
