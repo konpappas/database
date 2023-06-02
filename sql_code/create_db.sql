@@ -79,26 +79,28 @@ CREATE TABLE Author (
 
 ALTER TABLE Reservation
 ADD CONSTRAINT chk_reservation_dates CHECK (expiration_date > reservation_date),
-ADD FOREIGN KEY (user_id) REFERENCES User(user_id),
-ADD FOREIGN KEY (isbn) REFERENCES Book(isbn);
+ADD FOREIGN KEY (user_id) REFERENCES User(user_id) ON DELETE CASCADE,
+ADD FOREIGN KEY (isbn) REFERENCES Book(isbn) ON DELETE CASCADE;
 
 ALTER TABLE Borrow
 ADD COLUMN operator_id INT NOT NULL,
 ADD CONSTRAINT chk_borrow_dates CHECK (returning_date > borrowing_date),
-ADD FOREIGN KEY (operator_id) REFERENCES User(user_id),
-ADD FOREIGN KEY (user_id) REFERENCES User(user_id),
-ADD FOREIGN KEY (isbn) REFERENCES Book(isbn);
+ADD FOREIGN KEY (operator_id) REFERENCES User(user_id) ON DELETE CASCADE,
+ADD FOREIGN KEY (user_id) REFERENCES User(user_id) ON DELETE CASCADE,
+ADD FOREIGN KEY (isbn) REFERENCES Book(isbn) ON DELETE CASCADE;
 
 ALTER TABLE Review
-ADD FOREIGN KEY (user_id) REFERENCES User(user_id),
-ADD FOREIGN KEY (isbn) REFERENCES Book(isbn);
+ADD FOREIGN KEY (user_id) REFERENCES User(user_id) ON DELETE CASCADE,
+ADD FOREIGN KEY (isbn) REFERENCES Book(isbn) ON DELETE CASCADE;
 
 ALTER TABLE Book
 ADD COLUMN sec_category_id INT,
+ADD COLUMN school_id INT,
 ADD CONSTRAINT available_copies CHECK (available_copies >= 0),
-ADD FOREIGN KEY (category_id) REFERENCES Category(category_id),
-ADD FOREIGN KEY (sec_category_id) REFERENCES Category(category_id),
-ADD FOREIGN KEY (author_id) REFERENCES Author(author_id);
+ADD FOREIGN KEY (school_id) REFERENCES School(school_id) ON DELETE CASCADE,
+ADD FOREIGN KEY (category_id) REFERENCES Category(category_id) ON DELETE CASCADE,
+ADD FOREIGN KEY (sec_category_id) REFERENCES Category(category_id) ON DELETE CASCADE,
+ADD FOREIGN KEY (author_id) REFERENCES Author(author_id) ON DELETE CASCADE;
 
 ALTER TABLE User
 ADD COLUMN age INT NOT NULL,

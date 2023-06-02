@@ -9,4 +9,4 @@ FROM borrow br
 join user u ON u.user_id = br.user_id
 join book b on b.isbn = br.isbn
 join category c ON c.category_id = b.category_id
-where c.name = 'Horror' and u.user_type = 'Professor'
+where c.name = 'Horror' and u.user_type = 'Professor' and br.borrowing_date >= DATE_SUB(CURDATE(), INTERVAL 12 MONTH);
