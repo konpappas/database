@@ -72,3 +72,14 @@ exports.getAddSchool = (req, res, next) => {
     })
   }
   
+exports.getBorrowYoung = (req, res, next) => {
+    res.render('borrowsyoung.ejs',{
+        pageTitle: "View young professors with descending order according to borrow count"
+    })
+  }
+
+  exports.getAuthor5Books = (req, res, next) => {
+    res.render('authorsbooks.ejs',{
+        pageTitle: "View QUERY 3.1.7"
+    })
+  }

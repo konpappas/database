@@ -51,3 +51,35 @@ exports.getBorrowperSchool = (req, res, next) => {
     })
 
 }
+
+exports.getBorrowYoung = (req, res, next) => {
+        /* check for messages in order to show them when rendering the page */
+        let messages = req.flash("messages");
+        if (messages.length == 0) messages = [];
+    
+        let sqlQuery = `SELECT CONCAT(u.first_name, ' ', u.last_name) AS professor_name, count(b.borrow_id) AS number_of_books
+                        from user u 
+                        join borrow b on b.user_id=u.user_id
+                        where age < 40 and user_type = 'professor'
+                        group by b.user_id
+                        order by number_of_books desc;`;
+                    
+        /* create the connection, execute query, render data */
+        pool.getConnection((err, conn) => {
+            if (err) {
+                console.error('Error acquiring database connection:', err);
+                return next(err);
+              }
+            conn.promise().query(sqlQuery)
+            .then(([rows, borrow]) => {
+                res.render('borrowyoung.ejs', {
+                    pageTitle: "Query 3.1.3",
+                    borrow: rows,
+                    messages: messages,
+                  });
+            })
+            .then(() => pool.releaseConnection(conn))
+            .catch(err => console.log(err))
+        })
+       
+}
