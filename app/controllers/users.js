@@ -9,6 +9,7 @@ exports.getUsers = (req, res, next) => {
 
     const { searchFilter } = req.query;
     const sqlParams = [];
+    const schoolId = req.session.schoolId;
   
     let sqlQuery = 'SELECT * FROM User WHERE (user_type = "student" OR user_type = "professor")';
   
@@ -17,12 +18,15 @@ exports.getUsers = (req, res, next) => {
     } else if (searchFilter === 'approved:0') {
         sqlQuery += ' AND approved = 0';
     }
+
+    sqlQuery += ' AND school_id = ?';
+    sqlParams.push(schoolId);
     /* create the connection, execute query, render data */
     pool.getConnection((err, conn) => {
         if (err) {
             console.error('Error acquiring database connection:', err);
             return next(err);
-          }
+        }
         conn.promise().query(sqlQuery, sqlParams)
         .then(([rows, users]) => {
             res.render('users.ejs', {
