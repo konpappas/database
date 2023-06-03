@@ -16,6 +16,6 @@ router.get('/authors', AdminlayoutController.getAuthor5Books);
 router.get('/authors', AdminlayoutController.getAuthor5Books);
 router.get('/authors', AdminlayoutController.getAuthorsNoBorrow);
 router.get('/categories', AdminlayoutController.getCategChoice);
-
+router.get('/categories', AdminlayoutController.getTop3Cat);
 
 module.exports = router;

@@ -101,3 +101,9 @@ exports.getBorrowYoung = (req, res, next) => {
         pageTitle: "View QUERY 3.1.5"
     })
   }
+
+  exports.getTop3Cat = (req, res, next) => {
+    res.render('top3cat.ejs',{
+        pageTitle: "View QUERY 3.1.6"
+    })
+  }
