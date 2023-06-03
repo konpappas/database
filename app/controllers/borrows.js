@@ -122,3 +122,49 @@ exports.getsameBorrow = (req, res, next) => {
     })
    
 }
+
+exports.getBorrows = (req, res, next) => {
+
+    /* check for messages in order to show them when rendering the page */
+    let messages = req.flash("messages");
+    if (messages.length == 0) messages = [];
+
+    const { searchFilter, searchTerm } = req.query;
+    const sqlParams = [];
+    const userId = req.session.userId;
+  
+    let sqlQuery = `SELECT borrow_id, borrowing_date, returning_date, user_id, isbn, operator_id
+                    from borrow 
+                    where operator_id = ? `;
+
+    sqlParams.push(userId);
+  
+    if (searchFilter && searchTerm) {
+      switch (searchFilter) {
+        case 'User ID':
+          sqlQuery += ' AND user_id = ?';
+          sqlParams.push(`%${searchTerm}%`);
+          break;
+      }
+    }
+    /* create the connection, execute query, render data */
+    pool.getConnection((err, conn) => {
+        if (err) {
+            console.error('Error acquiring database connection:', err);
+            return next(err);
+          }
+        conn.promise().query(sqlQuery, sqlParams)
+        .then(([rows, books]) => {
+            res.render('borrows.ejs', {
+                pageTitle: "Borrows Page",
+                borrows: rows,
+                messages: messages,
+                searchFilter: searchFilter,
+                searchTerm: searchTerm
+              });
+        })
+        .then(() => pool.releaseConnection(conn))
+        .catch(err => console.log(err))
+    })
+
+}

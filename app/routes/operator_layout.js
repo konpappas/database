@@ -7,5 +7,6 @@ router.get('/', OperatorlayoutController.getLanding);
 router.get('/users', OperatorlayoutController.getOperatorUser);
 router.get('/books', OperatorlayoutController.getOperatorBook);
 router.get('/books-add', OperatorlayoutController.getAddBook);
+router.get('/borrows', OperatorlayoutController.getOperatorBorrow);
 
 module.exports = router;
