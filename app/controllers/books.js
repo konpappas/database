@@ -11,7 +11,7 @@ exports.getBooks = (req, res, next) => {
     const sqlParams = [];
     const schoolId = req.session.schoolId;
   
-    let sqlQuery = `SELECT b.isbn, b.title, b.publisher, b.pages, b.summary, b.available_copies, b.image, b.language, b.keywords, c.isbn, CONCAT(a.first_isbn, ' ', a.last_isbn) AS author_isbn
+    let sqlQuery = `SELECT b.isbn, b.title, b.publisher, b.pages, b.summary, b.available_copies, b.image, b.language, b.keywords, c.name, CONCAT(a.first_name, ' ', a.last_name) AS author_isbn
                     FROM book b
                     JOIN author a ON b.author_id = a.author_id
                     JOIN category c ON b.category_id = c.category_id `;
@@ -25,12 +25,12 @@ exports.getBooks = (req, res, next) => {
           sqlQuery += ' WHERE b.title LIKE ?';
           sqlParams.push(`%${searchTerm}%`);
           break;
-        case 'isbn':
-          sqlQuery += ' WHERE c.isbn LIKE ?';
+        case 'name':
+          sqlQuery += ' WHERE c.name LIKE ?';
           sqlParams.push(`%${searchTerm}%`);
           break;
-        case 'author_isbn':
-          sqlQuery += ` WHERE CONCAT(a.first_isbn, ' ', a.last_isbn) LIKE ?`;
+        case 'author_name':
+          sqlQuery += ` WHERE CONCAT(a.first_name, ' ', a.last_name) LIKE ?`;
           sqlParams.push(searchTerm);
           break;
         case 'available_copies':
