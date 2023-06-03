@@ -143,7 +143,7 @@ exports.getBorrows = (req, res, next) => {
       switch (searchFilter) {
         case 'User ID':
           sqlQuery += ' AND user_id = ?';
-          sqlParams.push(`%${searchTerm}%`);
+          sqlParams.push(searchTerm);
           break;
       }
     }
@@ -154,7 +154,7 @@ exports.getBorrows = (req, res, next) => {
             return next(err);
           }
         conn.promise().query(sqlQuery, sqlParams)
-        .then(([rows, books]) => {
+        .then(([rows, borrows]) => {
             res.render('borrows.ejs', {
                 pageTitle: "Borrows Page",
                 borrows: rows,

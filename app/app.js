@@ -20,7 +20,7 @@ const layout = require('./routes/layout');
 const schools = require('./routes/schools');
 /*const reservations = require('./routes/reservations');
 const reviews = require('./routes/reviews');*/
-const borrow = require('./routes/borrows');
+const borrows = require('./routes/borrows');
 const books = require('./routes/books');
 const authors = require('./routes/authors');
 const categories = require('./routes/categories');
@@ -63,7 +63,7 @@ app.use('/', layout);
 app.use('/schools', schools);
 /*app.use('/reservations', reservations);
 app.use('/reviews', reviews);*/
-app.use('/borrow', borrow);
+app.use('/borrows', borrows);
 app.use('/books', books);
 app.use('/authors', authors);
 app.use('/categories', categories);

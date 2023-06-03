@@ -19,7 +19,7 @@
             <div class="col-md-12">
                 <div class="card" id="card-container">
                     <div class="card-body" id="card">
-                    <% if (data.length == 0) { %> 
+                        <% if (authorData.length === 0 && userData.length === 0) { %>
                         <h1 style="margin-top: 5rem;">No Authors and Professors found!</h1>
                     <% } else { %>
                         <div class="table-responsive">
@@ -29,7 +29,7 @@
                                    <div class="col-md-6 mb-3">
                                         <label for="category">Category:</label>
                                         <select class="form-control" id="category" name="category">
-                                            <option value='Romance' <% if (category == 'omance') { %>selected<% } %>>Romance</option>
+                                            <option value='Romance' <% if (category == 'Romance') { %>selected<% } %>>Romance</option>
                                             <option value='Mystery' <% if (category == 'Mystery') { %>selected<% } %>>Mystery</option>
                                             <option value='Horror' <% if (category == 'Horror') { %>selected<% } %>>Horror</option>
                                             <option value='Thriller' <% if (category == 'Thriller') { %>selected<% } %>>Thriller</option>
@@ -49,18 +49,23 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>Name</th>
-                                      
+                                        <th>Authors</th>
+                                        <th>Professors</th>
                                         <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <% data.forEach((item, _) => { %>
-                                        <tr>
-                                            <td><%= item.author_name %></td>
-        
-                                        </tr>
-                                    <% }) %>
+                                    <% 
+                                    const maxLength = Math.max(authorData.length, userData.length);
+                                    for (let i = 0; i < maxLength; i++) { 
+                                        const authorItem = authorData[i] || {};
+                                        const userItem = userData[i] || {};
+                                    %>
+                                    <tr>
+                                        <td><%= authorItem.author_name || '' %></td>
+                                        <td><%= userItem.user_name || '' %></td>
+                                    </tr>
+                                    <% } %>
                                 </tbody>
                             </table>
                         </div>
