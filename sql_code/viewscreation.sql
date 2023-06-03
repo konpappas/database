@@ -1,5 +1,5 @@
 CREATE VIEW authors_comparison AS
-select a.first_name, a.last_name
+select CONCAT(a.first_name, ' ', a.last_name) AS author_name
 from book b 
 join author a on a.author_id = b.author_id
 group by b.author_id
@@ -9,7 +9,7 @@ having count(isbn) <= (SELECT MAX(book_count) - 5
                               GROUP BY author_id) AS counts);
 
 CREATE VIEW operators_comparison AS
-SELECT U.first_name, U.last_name, COUNT(*) AS loan_count
+SELECT CONCAT(U.first_name, ' ', U.last_name) AS user_name, COUNT(*) AS loan_count
 FROM Borrow B
 JOIN User U ON B.operator_id = U.user_id
 WHERE B.borrowing_date >= DATE_SUB(CURDATE(), INTERVAL 12 MONTH)
