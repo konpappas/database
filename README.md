@@ -29,6 +29,7 @@ Konstantinos Pappas
 4. Τρέχουμε την εντολή npm install για να εγκαταστήσουμε όλα τα dependencies.
 5. Kάνουμε npm start για την εκκίνηση του Server.
 6. Eπισκεπτόμαστε την σελίδα http://localhost:PORT/, όπου PORT ό,τι έχουμε γράψει στο SERVER_PORT στο .env.localhost. 
+7.Παρατήρηση: προκειμένου να μπορεί να κάνει backup/restore o administrator, χρειάζεται να έχετε επιβεβαιώσει ότι υπάρχει το MySQL\MySQL Server X.X\bin Directory στο PATH στις μεταβλητές περιβάλλοντος του συστήματός σας. Εάν δεν υπάρχει, χρειάζεται να το προσθέσετε για τη συγκεκριμένη λειτουργία του administartor.
 
 ### custom-env 
 1. Ανοίγουμε το .env.localhost.txt
