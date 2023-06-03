@@ -23,8 +23,7 @@ const reviews = require('./routes/reviews');*/
 const borrow = require('./routes/borrow');
 const books = require('./routes/books');
 const authors = require('./routes/authors');
-//const categories = require('./routes/categories');
-//const queries = require('./routes/queries');
+const categories = require('./routes/categories');
 const login = require('./routes/login');
 const signup = require('./routes/signup');
 const resetpassword = require('./routes/resetpassword');
@@ -67,8 +66,7 @@ app.use('/reviews', reviews);*/
 app.use('/borrow', borrow);
 app.use('/books', books);
 app.use('/authors', authors);
-/*app.use('/categories', categories);
-app.use('/queries', queries);*/
+app.use('/categories', categories);
 app.use('/login', login);
 app.use('/signup', signup);
 app.use('/resetpassword', resetpassword);

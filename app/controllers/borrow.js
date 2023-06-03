@@ -83,3 +83,42 @@ exports.getBorrowYoung = (req, res, next) => {
         })
        
 }
+
+exports.getsameBorrow = (req, res, next) => {
+    /* check for messages in order to show them when rendering the page */
+    let messages = req.flash("messages");
+    if (messages.length == 0) messages = [];
+
+    let sqlQuery = `SELECT CONCAT(U.first_name, ' ', U.last_name) AS operator_name, COUNT(*) AS loan_count
+                    FROM Borrow B
+                    JOIN User U ON B.operator_id = U.user_id
+                    WHERE B.borrowing_date >= DATE_SUB(CURDATE(), INTERVAL 12 MONTH)
+                    GROUP BY B.operator_id
+                    HAVING loan_count > 20
+                    AND loan_count = (
+                        SELECT COUNT(*) AS same_loan_count
+                        FROM Borrow
+                        WHERE borrowing_date >= DATE_SUB(CURDATE(), INTERVAL 12 MONTH)
+                        GROUP BY operator_id
+                        HAVING operator_id = B.operator_id
+                    )`;
+                
+    /* create the connection, execute query, render data */
+    pool.getConnection((err, conn) => {
+        if (err) {
+            console.error('Error acquiring database connection:', err);
+            return next(err);
+          }
+        conn.promise().query(sqlQuery)
+        .then(([rows, operator]) => {
+            res.render('sameborrow.ejs', {
+                pageTitle: "Query 3.1.5",
+                operator: rows,
+                messages: messages,
+              });
+        })
+        .then(() => pool.releaseConnection(conn))
+        .catch(err => console.log(err))
+    })
+   
+}
