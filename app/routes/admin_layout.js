@@ -11,6 +11,11 @@ router.get('/schools', AdminlayoutController.getSchools);
 router.get('/schools-add', AdminlayoutController.getAddSchool);
 router.get('/borrow', AdminlayoutController.getBorrowSchool);
 router.get('/borrow', AdminlayoutController.getBorrowYoung);
+router.get('/borrow', AdminlayoutController.getsameBorrow);
 router.get('/authors', AdminlayoutController.getAuthor5Books);
+router.get('/authors', AdminlayoutController.getAuthor5Books);
+router.get('/authors', AdminlayoutController.getAuthorsNoBorrow);
+router.get('/categories', AdminlayoutController.getCategChoice);
+
 
 module.exports = router;

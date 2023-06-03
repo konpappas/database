@@ -83,3 +83,21 @@ exports.getBorrowYoung = (req, res, next) => {
         pageTitle: "View QUERY 3.1.7"
     })
   }
+
+  exports.getCategChoice = (req, res, next) => {
+    res.render('categauthorprof.ejs',{
+        pageTitle: "View QUERY 3.1.2"
+    })
+  }
+
+  exports.getAuthorsNoBorrow = (req, res, next) => {
+    res.render('authornoborrow.ejs',{
+        pageTitle: "View QUERY 3.1.4"
+    })
+  }
+
+  exports.getsameBorrow = (req, res, next) => {
+    res.render('sameborrow.ejs',{
+        pageTitle: "View QUERY 3.1.5"
+    })
+  }
