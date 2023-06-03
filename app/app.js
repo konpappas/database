@@ -63,7 +63,11 @@ app.use('/', layout);
 app.use('/schools', schools);
 /*app.use('/reservations', reservations);
 app.use('/reviews', reviews);*/
+<<<<<<< HEAD
 app.use('/borrows', borrows);
+=======
+app.use('/borrows', borrow);
+>>>>>>> df4b8a9640152bf7c237fdff7c56de4a4a3e02c1
 app.use('/books', books);
 app.use('/authors', authors);
 app.use('/categories', categories);
