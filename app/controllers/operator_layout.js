@@ -27,3 +27,9 @@ exports.getAddBook = (req, res, next) => {
         pageTitle: "Insert a book in library"
     })
 }
+
+exports.getOperatorBorrow = (req, res, next) =>{
+    res.render('borrows.ejs',{
+        pageTitle: "Borrow View"
+    })
+}
