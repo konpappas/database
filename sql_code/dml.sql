@@ -431,3 +431,7 @@ WHERE isbn IN (select distinct isbn
 		from book b
         join user u on u.school_id = b.school_id
         where u.school_id = 5);
+        
+UPDATE borrow
+SET returned = ROUND(RAND())
+WHERE returned = 0;

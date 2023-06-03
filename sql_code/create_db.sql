@@ -84,6 +84,7 @@ ADD FOREIGN KEY (isbn) REFERENCES Book(isbn) ON DELETE CASCADE;
 
 ALTER TABLE Borrow
 ADD COLUMN operator_id INT NOT NULL,
+ADD COLUMN returned BOOLEAN NOT NULL DEFAULT FALSE,
 ADD CONSTRAINT chk_borrow_dates CHECK (returning_date > borrowing_date),
 ADD FOREIGN KEY (operator_id) REFERENCES User(user_id) ON DELETE CASCADE,
 ADD FOREIGN KEY (user_id) REFERENCES User(user_id) ON DELETE CASCADE,
