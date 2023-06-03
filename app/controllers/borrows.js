@@ -129,21 +129,27 @@ exports.getBorrows = (req, res, next) => {
     let messages = req.flash("messages");
     if (messages.length == 0) messages = [];
 
-    const { searchFilter, searchTerm } = req.query;
+    const { searchFilter, searchTerm, searchFilter1 } = req.query;
     const sqlParams = [];
     const userId = req.session.userId;
   
-    let sqlQuery = `SELECT borrow_id, borrowing_date, returning_date, user_id, isbn, operator_id
+    let sqlQuery = `SELECT borrow_id, borrowing_date, returning_date, user_id, isbn, operator_id, returned
                     from borrow 
                     where operator_id = ? `;
+
+    if (searchFilter1 === 'Valid') {
+        sqlQuery += ' AND returning_date > CURDATE() OR returned = 1 ';
+    } else if (searchFilter1 === 'Delayed') {
+        sqlQuery += ' AND returning_date <= CURDATE() AND returned = 0 ';
+    }
 
     sqlParams.push(userId);
   
     if (searchFilter && searchTerm) {
       switch (searchFilter) {
-        case 'User ID':
+        case 'user_id':
           sqlQuery += ' AND user_id = ?';
-          sqlParams.push(`%${searchTerm}%`);
+          sqlParams.push(searchTerm);
           break;
       }
     }
@@ -154,7 +160,7 @@ exports.getBorrows = (req, res, next) => {
             return next(err);
           }
         conn.promise().query(sqlQuery, sqlParams)
-        .then(([rows, books]) => {
+        .then(([rows, borrows]) => {
             res.render('borrows.ejs', {
                 pageTitle: "Borrows Page",
                 borrows: rows,
@@ -168,3 +174,25 @@ exports.getBorrows = (req, res, next) => {
     })
 
 }
+
+exports.postReturn = (req, res, next) => {
+    const borrow_id = row.body.borrow_id;
+    const returned = req.body.returned === "true" ? 1 : 0; 
+    const isbn = req.body.isbn;
+    
+    pool.getConnection((err,conn) =>{
+        var sqlQuery = `UPDATE borrow SET returned = ? WHERE borrow_id = ?;
+                        UPDATE books SET available_copies = available_copies + 1 WHERE isbn = ?;`;
+  
+        conn.promise().query(sqlQuery, [returned, borrow_id, isbn])
+        .then(() =>{
+            pool.releaseConnection(conn);
+            res.redirect('/borrows/view');
+        })
+        .catch(err => {
+            res.send(err);
+            //res.redirect('/users');
+        })
+    })
+  
+  }
