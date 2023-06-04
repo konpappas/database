@@ -133,8 +133,9 @@ exports.getBorrows = (req, res, next) => {
     const sqlParams = [];
     const userId = req.session.userId;
   
-    let sqlQuery = `SELECT borrow_id, borrowing_date, returning_date, user_id, isbn, operator_id, returned
-                    from borrow 
+    let sqlQuery = `SELECT borrow_id, borrowing_date, returning_date, b.user_id, u.first_name, u.last_name, isbn, operator_id, returned
+                    from borrow b
+                    JOIN user u ON b.user_id = u.user_id
                     where operator_id = ? `;
 
     if (searchFilter1 === 'Valid') {
@@ -144,17 +145,33 @@ exports.getBorrows = (req, res, next) => {
         sqlQuery += ' AND (returning_date <= CURDATE() AND returned = 0) ';
         sqlParams.push(userId);
     }
-
-    sqlParams.push(userId);
+    else{ 
+     sqlParams.push(userId);
+    }
   
     if (searchFilter && searchTerm) {
       switch (searchFilter) {
         case 'user_id':
-          sqlQuery += ' AND user_id = ?';
+          sqlQuery += ' AND b.user_id = ?';
           sqlParams.push(searchTerm);
           break;
+        case'first_name':
+        sqlQuery += ' AND u.first_name = ?';
+        sqlParams.push(searchTerm);
+        break;
+        case'last_name':
+        sqlQuery += ' AND u.last_name = ?';
+        sqlParams.push(searchTerm);
+        break;
+        case'delaydays':
+        sqlQuery += ' AND DATEDIFF(CURDATE(), b.returning_date) = ?';
+        sqlParams.push(searchTerm);
+        break;
       }
     }
+
+    console.log('sqlQuery:', sqlQuery);
+    console.log('sqlParams:', sqlParams);
     /* create the connection, execute query, render data */
     pool.getConnection((err, conn) => {
         if (err) {
@@ -163,6 +180,7 @@ exports.getBorrows = (req, res, next) => {
           }
         conn.promise().query(sqlQuery, sqlParams)
         .then(([rows, borrows]) => {
+            console.log('Query Result:', rows);
             res.render('borrows.ejs', {
                 pageTitle: "Borrows Page",
                 borrows: rows,

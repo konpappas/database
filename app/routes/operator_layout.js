@@ -8,6 +8,8 @@ router.get('/users', OperatorlayoutController.getOperatorUser);
 router.get('/books', OperatorlayoutController.getOperatorBook);
 router.get('/books-add', OperatorlayoutController.getAddBook);
 router.get('/borrows', OperatorlayoutController.getOperatorBorrow);
+router.get('/reviews', OperatorlayoutController.getOperatorQuery3);
+
 // router.get('/borrow-upd', OperatorlayoutController.updReturnDate);
 
 module.exports = router;
