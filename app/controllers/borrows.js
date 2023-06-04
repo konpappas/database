@@ -166,7 +166,9 @@ exports.getBorrows = (req, res, next) => {
                 borrows: rows,
                 messages: messages,
                 searchFilter: searchFilter,
+                searchFilter1: searchFilter1,
                 searchTerm: searchTerm
+
               });
         })
         .then(() => pool.releaseConnection(conn))
@@ -176,23 +178,26 @@ exports.getBorrows = (req, res, next) => {
 }
 
 exports.postReturn = (req, res, next) => {
-    const borrow_id = row.body.borrow_id;
+    const borrow_id = req.body.borrow_id;
     const returned = req.body.returned === "true" ? 1 : 0; 
     const isbn = req.body.isbn;
     
     pool.getConnection((err,conn) =>{
-        var sqlQuery = `UPDATE borrow SET returned = ? WHERE borrow_id = ?;
-                        UPDATE books SET available_copies = available_copies + 1 WHERE isbn = ?;`;
+        let updateBorrowQuery = `UPDATE borrow SET returned = ? WHERE borrow_id = ?`;
+        let updateBookQuery = `UPDATE book SET available_copies = available_copies + 1 WHERE isbn = ?`;
   
-        conn.promise().query(sqlQuery, [returned, borrow_id, isbn])
-        .then(() =>{
-            pool.releaseConnection(conn);
-            res.redirect('/borrows/view');
-        })
-        .catch(err => {
-            res.send(err);
-            //res.redirect('/users');
-        })
-    })
-  
-  }
+        Promise.all([
+            conn.promise().query(updateBorrowQuery, [returned, borrow_id]),
+            conn.promise().query(updateBookQuery, [isbn])
+        ])
+            .then(() => {
+
+                conn.release();
+                res.redirect('/borrows/view');
+            })
+            .catch(err => {
+                console.error(err);
+                res.send('Something went wrong.');
+            });
+    });
+}

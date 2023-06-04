@@ -22,13 +22,13 @@
               <h4 class="modal-title">Edit Books</h4>
             </div>
             <div class="modal-body">
-                <form id="modal-form">
+                <form id="modal-form" action="/update/:isbn" method="POST">
                     <div style="text-align: center;">
-                        <input type="text" name="ISBN" id="ISBN" readonly></br>
+                        <input type="text" name="isbn" id="isbn" readonly></br>
                         <input type="text" name="title" id="title"></br>
                         <input type="text" name="publisher" id="publisher"></br>
                         <input type="text" name="pages" id="pages"></br>
-                        <input type="text" name="entry_date" id="entry_date"></br>
+                     
                         <input type="text" name="summary" id="summary"></br>
                         <input type="text" name="available_copies" id="available_copies"></br>
                         <!--<input type="text" name="image" id="image"></br>-->
@@ -38,6 +38,7 @@
                         <input type="text" name="keywords" id="keywords"></br>
                         <input type="text" name="category_id" id="category_id"></br>
                         <input type="text" name="author_id" id="author_id">
+                   
                        <!-- <input type="text" name="program_id" id="program_id">-->
                     </div>
                 </form>
@@ -93,6 +94,7 @@
                                         <th>Language</th>
                                         <th>Keywords</th>
                                         <th>Category Name</th>
+                            
                                         <th>Author Name</th>
                                        
                                         <th></th>
@@ -111,6 +113,7 @@
                                             <td><%= Book.language %></td>
                                             <td><%= Book.keywords %></td>
                                             <td><%= Book.name %></td>
+                                  
                                             <td><%= Book.author_name %></td>
                                             <td>
                                                 <a type="button" style="cursor: pointer" onclick="setModalFields(this)"
@@ -119,16 +122,12 @@
                                                     data-pages="<%= Book.pages %>" data-summary="<%= Book.summary %>"
                                                     data-available_copies="<%= Book.available_copies %>" data-image="<%= Book.image %>"
                                                     data-language="<%= Book.language %>" data-keywords="<%= Book.keywords %>"
-                                                    data-category_id="<%= Book.name %>" data-author_id="<%= Book.author_name %>"
+                                                    data-category_id="<%= Book.category_id %>"  data-author_id="<%= Book.author_id %>"
                                                     data-target="#editModal">
                                                     <i class="fa fa-edit"></i>
                                                 </a>
                                             </td>
-                                            <form method="POST" action="/books/delete/<%= Book.isbn %>">
-                                                <td> 
-                                                    <button style="all: unset; cursor: pointer;" type="submit"><i class="fa fa-trash"></i></button>
-                                                </td>
-                                            </form>
+                                            
                                         </tr>
                                     <% }) %>
                                 </tbody>
