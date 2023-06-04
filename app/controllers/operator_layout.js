@@ -34,4 +34,10 @@ exports.getOperatorBorrow = (req, res, next) =>{
     })
 }
 
+exports.getOperatorQuery3 = (req, res, next) =>{
+    res.render('opq3.ejs',{
+        pageTitle: "Query 3.2.3"
+    })
+}
+
 
