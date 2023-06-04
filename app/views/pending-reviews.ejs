@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= pageTitle %></title>
+</head>
+<body>
+  <h1>Pending Reviews</h1>
+  <% reviews.forEach(review => { %>
+    <div>
+      <h2>Review ID: <%= review.review_id %></h2>
+      <p>Review Text: <%= review.review_text %></p>
+      <p>Rating: <%= review.rating %></p>
+      <!-- Additional review details can be displayed here -->
+    </div>
+  <% }); %>
+</body>
+</html>
