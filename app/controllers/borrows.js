@@ -138,9 +138,11 @@ exports.getBorrows = (req, res, next) => {
                     where operator_id = ? `;
 
     if (searchFilter1 === 'Valid') {
-        sqlQuery += ' AND returning_date > CURDATE() OR returned = 1 ';
+        sqlQuery += ' AND (returning_date > CURDATE() OR returned = 1) ';
+        sqlParams.push(userId);
     } else if (searchFilter1 === 'Delayed') {
-        sqlQuery += ' AND returning_date <= CURDATE() AND returned = 0 ';
+        sqlQuery += ' AND (returning_date <= CURDATE() AND returned = 0) ';
+        sqlParams.push(userId);
     }
 
     sqlParams.push(userId);
