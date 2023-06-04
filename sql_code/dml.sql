@@ -435,3 +435,14 @@ WHERE isbn IN (select distinct isbn
 UPDATE borrow
 SET returned = ROUND(RAND())
 WHERE returned = 0;
+
+UPDATE borrow
+SET returned = 1
+WHERE user_id IN (
+  SELECT * FROM (
+    SELECT user_id
+    FROM borrow
+    GROUP BY user_id
+    HAVING COUNT(returned = 0) > 2
+  ) AS subquery
+);

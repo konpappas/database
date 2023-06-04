@@ -164,7 +164,7 @@ exports.getBorrows = (req, res, next) => {
         sqlParams.push(searchTerm);
         break;
         case'delaydays':
-        sqlQuery += ' AND DATEDIFF(CURDATE(), b.returning_date) = ?';
+        sqlQuery += ' AND DATEDIFF(b.returning_date, CURDATE()) = ?';
         sqlParams.push(searchTerm);
         break;
       }

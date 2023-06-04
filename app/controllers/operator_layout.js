@@ -41,3 +41,9 @@ exports.getOperatorQuery3 = (req, res, next) =>{
 }
 
 
+
+exports.getOperatorReservation = (req, res, next) =>{
+    res.render('reservations.ejs',{
+        pageTitle: "Reservation View"
+    })
+}
