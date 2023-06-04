@@ -23,7 +23,7 @@ Konstantinos Pappas
 6. [connect-flash](https://www.npmjs.com/package/connect-flash)
 
 ## Βήματα για εγκατάσταση εφαρμογής
-1. Ανοίγουμε στο MySQL Workbench τα sql scipts που είναι μέσα στον φάκελο sql_code. Δημιουργούμε τη βάση και κάνουμε insert τα δεδομένα στους πίνακες.
+1. Ανοίγουμε στο MySQL Workbench τα sql scipts που είναι μέσα στον φάκελο sql_code. Συγκεκριμένα τα create_db, dml, viewscreation. Δημιουργούμε τη βάση, κάνουμε insert τα δεδομένα στους πίνακες και δημιουργούμε τα Views.
 2. Eπεξεργαζόμαστε το .env.localhost.txt εντός του φακέλου app, σύμφωνα με τις οδηγίες παρακάτω στην παράγραφο ```custom-env```.
 3. Στη γραμμή εντολών κατευθυνόμαστε στο directory του app με cd command.
 4. Τρέχουμε την εντολή npm install για να εγκαταστήσουμε όλα τα dependencies.
