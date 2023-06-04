@@ -11,7 +11,7 @@ exports.getBooks = (req, res, next) => {
     const sqlParams = [];
     const schoolId = req.session.schoolId;
   
-    let sqlQuery = `SELECT b.isbn, b.title, b.publisher, b.pages, b.summary, b.available_copies, b.image, b.language, b.keywords, c.name, CONCAT(a.first_name, ' ', a.last_name) AS author_isbn
+    let sqlQuery = `SELECT b.isbn, b.title, b.publisher, b.pages, b.summary, b.available_copies, b.image, b.language, b.keywords, c.name, CONCAT(a.first_name, ' ', a.last_name) AS author_name
                     FROM book b
                     JOIN author a ON b.author_id = a.author_id
                     JOIN category c ON b.category_id = c.category_id `;
@@ -61,6 +61,79 @@ exports.getBooks = (req, res, next) => {
 
 }
 
+
+exports.updateBook = (req, res, next) => {
+  const isbn = req.body.isbn;
+  const updatedFields = {};
+
+  // Check if each field is provided in the request body and add it to the updatedFields object
+  if (req.body.title) {
+    updatedFields.title = req.body.title;
+  }
+  if (req.body.publisher) {
+    updatedFields.publisher = req.body.publisher;
+  }
+  if (req.body.pages) {
+    updatedFields.pages = req.body.pages;
+  }
+  // Add other fields here
+  if (req.body.summary) {
+    updatedFields.summary = req.body.summary;
+  }
+  if (req.body.available_copies) {
+    updatedFields.available_copies = req.body.available_copies;
+  }
+  if (req.body.image) {
+    updatedFields.image = req.body.image;
+  }
+  if (req.body.language) {
+    updatedFields.language = req.body.language;
+  }
+  if (req.body.keywords) {
+    updatedFields.keywords = req.body.keywords;
+  }
+  if (req.body.category_id) {
+    updatedFields.category_id = req.body.category_id;
+  }
+  if (req.body.author_id) {
+    updatedFields.author_id = req.body.author_id;
+  }
+  if (req.body.school_id) {
+    updatedFields.school_id = req.body.school_id;
+  }
+  const sqlParams = [];
+  let sqlQuery = 'UPDATE book SET';
+
+  // Loop through the updatedFields object to build the SQL query and collect the corresponding parameter values
+  Object.entries(updatedFields).forEach(([key, value], index) => {
+    sqlQuery += ` ${key} = ?`;
+    sqlParams.push(value);
+    if (index < Object.keys(updatedFields).length - 1) {
+      sqlQuery += ',';
+    }
+  });
+
+  sqlQuery += ' WHERE isbn = ?';
+  sqlParams.push(isbn);
+
+  pool.getConnection((err, conn) => {
+    if (err) {
+      console.error('Error acquiring database connection:', err);
+      return next(err);
+    }
+    conn.promise()
+      .query(sqlQuery, sqlParams)
+      .then(() => {
+        pool.releaseConnection(conn);
+        res.redirect('/books');
+      })
+      .catch(err => {
+        console.error('Error updating book:', err);
+        next(err);
+      });
+  });
+};
+
 exports.postBook = (req, res, next) => {
   const isbn = req.body.isbn;
   const title = req.body.title;
@@ -78,7 +151,7 @@ exports.postBook = (req, res, next) => {
 
 
   pool.getConnection((err,conn) =>{
-      var sqlQuery = `INSERT INTO school(isbn, title, publisher, pages, summary, available_copies, image, language, keywords, category_id, author_id, sec_category_id, school_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+      var sqlQuery = `INSERT INTO book(isbn, title, publisher, pages, summary, available_copies, image, language, keywords, category_id, author_id, sec_category_id, school_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
       conn.promise().query(sqlQuery, [isbn, title, publisher, pages, summary, available_copies, image, language, keywords, category_id, author_id, sec_category_id, school_id])
       .then(() =>{

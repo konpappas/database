@@ -13,6 +13,7 @@
 
 <body>
     
+    
     <div id="editModal" class="modal fade" role="dialog">
         <div class="modal-dialog">
       
@@ -22,9 +23,10 @@
               <h4 class="modal-title">Book Return</h4>
             </div>
             <div class="modal-body">
-                <form id="modal-form" action="/return/:borrow_id" method="POST">
+                <form id="modal-form" action="view/return/:borrow_id" method="POST">
                     <div style="text-align: center;">
                         <input type="text" name="borrow_id" id="borrow_id" readonly></br>
+                        <input type="text" name="isbn" id="isbn" readonly></br>
                         <input type="checkbox" name="returned" id="returned" value="true" >
                         <label for="returned">Returned</label>
                     </div>
@@ -54,7 +56,7 @@
                              <form action="/borrows/view" method="GET" class="mb-4">
                                 <div class="form-row">
                                     <div class="col-md-1 mb-1">
-                                        <label for="searchFilter">Search Filter:</label>
+                                        <label for="searchFilter1">Search Filter:</label>
                                         <div class="form-check">
                                             <input class="form-check-input" type="radio" name="searchFilter1" id="valid" value="Valid" checked>
                                             <label class="form-check-label" for="valid">
@@ -133,9 +135,9 @@
         function setModalFields(row) {
             document.getElementById("borrow_id").value = row.dataset.borrow_id;
             document.getElementById("isbn").value = row.dataset.isbn;
-            document.getElementById("returned").value = row.dataset.returned == '1';
+            document.getElementById("returned").checked = row.dataset.returned == '1';
 
-            document.getElementById("modal-form").action = "/borrows/return/" + row.dataset.borrow_id ;
+            document.getElementById("modal-form").action = "/borrows/view/return/" + row.dataset.borrow_id ;
             document.getElementById("modal-form").method = "POST";
         }
         
