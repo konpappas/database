@@ -18,7 +18,7 @@ require('custom-env').env('localhost');
 
 const layout = require('./routes/layout');
 const schools = require('./routes/schools');
-//const reservations = require('./routes/reservations');
+const reservations = require('./routes/reservations');
 const reviews = require('./routes/reviews');
 const borrows = require('./routes/borrows');
 const books = require('./routes/books');
@@ -62,7 +62,7 @@ app.use(session({
 
 app.use('/', layout);
 app.use('/schools', schools);
-//app.use('/reservations', reservations);
+app.use('/reservations', reservations);
 app.use('/reviews', reviews);
 app.use('/borrows', borrows);
 app.use('/books', books);
