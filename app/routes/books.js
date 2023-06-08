@@ -7,4 +7,8 @@ router.get('/', booksController.getBooks);
 router.post('/add', booksController.postBook);
 router.post('/update/:isbn', booksController.updateBook);
 
+//user books
+router.get('/users', booksController.getUserBooks);
+//router.get('/mybooks', booksController.getmyBooks);
+
 module.exports = router;

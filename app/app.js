@@ -31,7 +31,7 @@ const operator_layout = require('./routes/operator_layout');
 const admin_layout = require('./routes/admin_layout');
 const users= require('./routes/users');
 const operators = require('./routes/operators');
-const ProfessorlayoutRouter = require('./routes/prof_layout');
+const user_layout = require('./routes/user_layout');
 
 
 /* end of ROUTES and how to import routes */
@@ -75,7 +75,7 @@ app.use('/operator_layout', operator_layout);
 app.use('/admin_layout', admin_layout);
 app.use('/users', users);
 app.use('/operators', operators);
-app.use('/prof_layout', ProfessorlayoutRouter);
+app.use('/user_layout', user_layout);
 
 
 /* End of routes used by the project */

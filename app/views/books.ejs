@@ -36,8 +36,8 @@
                         <img id="image-preview" src="" alt="Image Preview"><br>
                         <input type="text" name="language" id="language"></br>
                         <input type="text" name="keywords" id="keywords"></br>
-                        <input type="text" name="category_id" id="category_id"></br>
-                        <input type="text" name="author_id" id="author_id">
+                        <input type="text" name="name" id="name"></br>
+                        <input type="text" name="author_name" id="author_name">
                    
                        <!-- <input type="text" name="program_id" id="program_id">-->
                     </div>
@@ -122,7 +122,7 @@
                                                     data-pages="<%= Book.pages %>" data-summary="<%= Book.summary %>"
                                                     data-available_copies="<%= Book.available_copies %>" data-image="<%= Book.image %>"
                                                     data-language="<%= Book.language %>" data-keywords="<%= Book.keywords %>"
-                                                    data-category_id="<%= Book.category_id %>"  data-author_id="<%= Book.author_id %>"
+                                                    data-name="<%= Book.name %>"  data-author_name="<%= Book.author_name %>"
                                                     data-target="#editModal">
                                                     <i class="fa fa-edit"></i>
                                                 </a>
@@ -148,8 +148,8 @@
             document.getElementById("image").value = row.dataset.image;
             document.getElementById("language").value = row.dataset.language;
             document.getElementById("keywords").value = row.dataset.keywords;
-            document.getElementById("category_id").value = row.dataset.category_id;
-            document.getElementById("author_id").value = row.dataset.author_id;
+            document.getElementById("name").value = row.dataset.name;
+            document.getElementById("author_name").value = row.dataset.author_name;
 
             document.getElementById("modal-form").action = "/books/update/" + row.dataset.isbn;
             document.getElementById("modal-form").method = "POST";
