@@ -32,12 +32,28 @@ exports.getMyinfo = (req, res, next) => {
   });
 }
 
+<<<<<<< HEAD
 exports.getReviews = (req, res, next) => {
   res.render('reviews.ejs', {
       pageTitle: "Reviews Page"
   });
 }
 
+=======
+exports.getMyReservations = (req, res, next) => {
+  res.render('userreservation.ejs', {
+      pageTitle: "My Reservations"
+  });
+}
+
+// exports.AddReservation = (req, res, next) =>{
+//   res.render('add-reservation.ejs',{
+//       pageTitle: "Make a reservation"
+//   })
+// }
+
+
+>>>>>>> dba67b5a14786f3d40a11e11355ffcb49341c2ca
 
 // Controller function for displaying book details
 /*exports.displayBookDetails = (req, res) => {

@@ -9,7 +9,13 @@ router.get('/books', OperatorlayoutController.getOperatorBook);
 router.get('/books-add', OperatorlayoutController.getAddBook);
 router.get('/borrows', OperatorlayoutController.getOperatorBorrow);
 router.get('/reviews', OperatorlayoutController.getOperatorQuery3);
+<<<<<<< HEAD
 router.get('/reviews/allreviews', OperatorlayoutController.getApproveReview);
+=======
+router.get('/reservations', OperatorlayoutController.getOperatorReservation);
+router.get('/borrow-add', OperatorlayoutController.getAddBorrow);
+
+>>>>>>> dba67b5a14786f3d40a11e11355ffcb49341c2ca
 
 // router.get('/borrow-upd', OperatorlayoutController.updReturnDate);
 

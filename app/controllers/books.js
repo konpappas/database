@@ -233,6 +233,7 @@ exports.getUserBooks = (req, res, next) => {
 
 }
 
+<<<<<<< HEAD
 // Controller function for submitting a review for a book
 exports.submitReview = (req, res, next) => {
   const isbn = req.body.isbn;
@@ -257,5 +258,107 @@ exports.submitReview = (req, res, next) => {
         console.error('Error executing SQL query:', err);
   
       });
+=======
+exports.addReservation = (req, res, next) => {
+  let messages = req.flash("messages");
+  if (messages.length == 0) messages = [];
+
+  const isbn = req.body.isbn;
+  const user_id = req.session.userId;
+  const role = req.session.usertype;
+
+  pool.getConnection((err, conn) => {
+    if (err) {
+      // Handle the error
+      res.send(err);
+      return;
+    }
+
+    conn.beginTransaction((err) => {
+      if (err) {
+        // Handle the error
+        res.send(err);
+        return;
+      }
+
+      const countQuery = 'SELECT COUNT(*) AS reservation_count FROM reservation WHERE user_id = ?';
+      const countParams = [user_id];
+
+      conn.query(countQuery, countParams, (err, countResult) => {
+        if (err) {
+          // Handle the error
+          conn.rollback(() => {
+            res.send(err);
+          });
+          return;
+        }
+
+        const reservationCount = countResult[0].borrow_count;
+
+        const countQuery2 = 'SELECT available_copies FROM book WHERE isbn = ?';
+        const countParams2 = [isbn];
+
+        conn.query(countQuery2, countParams2, (err, copiesResult) => {
+          if (err) {
+            // Handle the error
+            conn.rollback(() => {
+              res.send(err);
+            });
+            return;
+          }
+
+          const copies = copiesResult[0].available_copies;
+
+          if ((reservationCount >= 2 && role === 'student') || (reservationCount >= 1 && role === 'professor') || copies < 1) {
+            // User has more than 2 borrows or there are no remaining copies, handle the error or show a message
+            conn.rollback(() => {
+              const error = new Error('User has reached the maximum number of borrows or there are no remaining copies.');
+              res.send(error);
+            });
+            return;
+          }
+
+          const insertQuery = 'INSERT INTO reservation (reservation_date, expiration_date, user_id, isbn) VALUES (CURDATE(), DATE_ADD(CURDATE(), INTERVAL 7 DAY), ?, ?)';
+          const insertParams = [user_id, isbn];
+
+          conn.query(insertQuery, insertParams, (err, insertResult) => {
+            if (err) {
+              // Handle the error
+              conn.rollback(() => {
+                res.send(err);
+              });
+              return;
+            }
+
+            const decCopies = 'UPDATE book SET available_copies = available_copies - 1 WHERE isbn = ?';
+            const copiesParams = [isbn];
+
+            conn.query(decCopies, copiesParams, (err, avResult) => {
+                if (err) {
+                  // Handle the error
+                  conn.rollback(() => {
+                    res.send(err);
+                  });
+                  return;
+                }
+            });
+
+            conn.commit((err) => {
+              if (err) {
+                // Handle the error
+                conn.rollback(() => {
+                  res.send(err);
+                });
+              } else {
+                // Both statements executed successfully
+                conn.release();
+                res.redirect('/books/users');
+              }
+            });
+          });
+        });
+      });
+    });
+>>>>>>> dba67b5a14786f3d40a11e11355ffcb49341c2ca
   });
 };

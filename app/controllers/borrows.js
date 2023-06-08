@@ -164,7 +164,7 @@ exports.getBorrows = (req, res, next) => {
         sqlParams.push(searchTerm);
         break;
         case'delaydays':
-        sqlQuery += ' AND DATEDIFF(CURDATE(), b.returning_date) = ?';
+        sqlQuery += ' AND DATEDIFF(CURDATE(), returning_date) = ?';
         sqlParams.push(searchTerm);
         break;
       }
@@ -221,3 +221,122 @@ exports.postReturn = (req, res, next) => {
             });
     });
 }
+
+exports.newBorrow = (req, res, next) => {
+    let messages = req.flash("messages");
+    if (messages.length == 0) messages = [];
+  
+    const isbn = req.body.isbn;
+    const user_id = req.body.user_id;
+    const operator_id = req.session.userId;
+  
+    pool.getConnection((err, conn) => {
+      if (err) {
+        // Handle the error
+        res.send(err);
+        return;
+      }
+  
+      conn.beginTransaction((err) => {
+        if (err) {
+          // Handle the error
+          res.send(err);
+          return;
+        }
+  
+        const countQuery = 'SELECT COUNT(*) AS borrow_count FROM borrow WHERE user_id = ? and returned = 0';
+        const countParams = [user_id];
+  
+        conn.query(countQuery, countParams, (err, countResult) => {
+          if (err) {
+            // Handle the error
+            conn.rollback(() => {
+              res.send(err);
+            });
+            return;
+          }
+  
+          const borrowCount = countResult[0].borrow_count;
+  
+          const countQuery1 = 'SELECT user_type FROM user WHERE user_id = ?';
+          const countParams1 = [user_id];
+  
+          conn.query(countQuery1, countParams1, (err, userTypeResult) => {
+            if (err) {
+              // Handle the error
+              conn.rollback(() => {
+                res.send(err);
+              });
+              return;
+            }
+  
+            const role = userTypeResult[0].user_type;
+  
+            const countQuery2 = 'SELECT available_copies FROM book WHERE isbn = ?';
+            const countParams2 = [isbn];
+  
+            conn.query(countQuery2, countParams2, (err, copiesResult) => {
+              if (err) {
+                // Handle the error
+                conn.rollback(() => {
+                  res.send(err);
+                });
+                return;
+              }
+  
+              const copies = copiesResult[0].available_copies;
+  
+              if ((borrowCount >= 2 && role === 'student' ) || (borrowCount >= 1 && role === 'professor' ) || (copies < 1)) {
+                // User has more than 2 borrows, handle the error or show a message
+                conn.rollback(() => {
+                  const error = new Error('User has reached the maximum number of borrows or there are no remaining copies.');
+                  res.send(error);
+                });
+                return;
+              }
+  
+              const insertQuery = 'INSERT INTO borrow (borrowing_date, returning_date, user_id, isbn, operator_id, returned) VALUES (CURDATE(), DATE_ADD(CURDATE(), INTERVAL 7 DAY), ?, ?, ?, 0)';
+              const insertParams = [user_id, isbn, operator_id];
+  
+              conn.query(insertQuery, insertParams, (err, insertResult) => {
+                if (err) {
+                  // Handle the error
+                  conn.rollback(() => {
+                    res.send(err);
+                  });
+                  return;
+                }
+
+                const decCopies = 'UPDATE book SET available_copies = available_copies - 1 WHERE isbn = ?';
+                const copiesParams = [isbn];
+
+                conn.query(decCopies, copiesParams, (err, avResult) => {
+                    if (err) {
+                      // Handle the error
+                      conn.rollback(() => {
+                        res.send(err);
+                      });
+                      return;
+                    }
+                });
+  
+                conn.commit((err) => {
+                  if (err) {
+                    // Handle the error
+                    conn.rollback(() => {
+                      res.send(err);
+                    });
+                  } else {
+                    // Both statements executed successfully
+                    conn.release();
+                    res.redirect('/borrows/view');
+                  }
+                });
+              });
+            });
+          });
+        });
+      });
+    });
+  }
+  

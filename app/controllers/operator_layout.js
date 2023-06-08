@@ -48,3 +48,15 @@ exports.getApproveReview = (req, res, next) =>{
 
 
 
+
+exports.getOperatorReservation = (req, res, next) =>{
+    res.render('reservations.ejs',{
+        pageTitle: "Reservation View"
+    })
+}
+
+exports.getAddBorrow = (req, res, next) =>{
+    res.render('add-borrow.ejs',{
+        pageTitle: "Insert a borrow"
+    })
+}
