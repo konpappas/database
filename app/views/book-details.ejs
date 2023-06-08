@@ -19,6 +19,19 @@
           
           <div class="modal-content">
             <div class="modal-header">
+<<<<<<< HEAD
+              <h4 class="modal-title">Review</h4>
+            </div>
+            <div class="modal-body">
+                <form id="modal-form" action="users/submitreview/:isbn" method="POST">
+                    <div style="text-align: center;">
+                        <input type="text" name="isbn" id="isbn" readonly></br>
+                        <input type="text" name="review_text" id="review_text"></br>
+                        <input type="text" name="rating" id="rating"></br>
+                
+                   
+                       <!-- <input type="text" name="program_id" id="program_id">-->
+=======
               <h4 class="modal-title">Reservation Set</h4>
             </div>
             <div class="modal-body">
@@ -26,6 +39,7 @@
                     <div style="text-align: center;">
                         <input type="text" name="isbn" id="isbn" readonly></br>
                         <label for="add borrow">Add Reservation</label>
+>>>>>>> dba67b5a14786f3d40a11e11355ffcb49341c2ca
                     </div>
                 </form>
             </div>
@@ -104,8 +118,14 @@
                                             <td><%= Book.author_name %></td>
                                             <td>
                                                 <a type="button" style="cursor: pointer" onclick="setModalFields(this)"
+<<<<<<< HEAD
+                                                    data-toggle="modal" data-isbn="<%= Book.isbn %>" 
+                                                    data-review_text="<%= Book.review_text %>" data-rating="<%= Book.rating %>"
+                                                   
+=======
                                                     data-toggle="modal" 
                                                     data-isbn="<%= Book.isbn %>"
+>>>>>>> dba67b5a14786f3d40a11e11355ffcb49341c2ca
                                                     data-target="#editModal">
                                                     <i class="fa fa-edit"></i>
                                                 </a>
@@ -123,8 +143,16 @@
     <script>
        function setModalFields(row) {
             document.getElementById("isbn").value = row.dataset.isbn;
+<<<<<<< HEAD
+            document.getElementById("review_text").value = row.dataset.review_text;
+            document.getElementById("rating").value = row.dataset.rating;
+
+
+            document.getElementById("modal-form").action = "/books/users/submitreview/" + row.dataset.isbn;
+=======
 
             document.getElementById("modal-form").action = "/books/users/toReservation";
+>>>>>>> dba67b5a14786f3d40a11e11355ffcb49341c2ca
             document.getElementById("modal-form").method = "POST";
         }
         

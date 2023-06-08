@@ -11,5 +11,6 @@ router.post('/update/:isbn', booksController.updateBook);
 router.get('/users', booksController.getUserBooks);
 router.post('/users/toReservation', booksController.addReservation);
 //router.get('/mybooks', booksController.getmyBooks);
+router.post('/users/submitreview/:isbn', booksController.submitReview);
 
 module.exports = router;

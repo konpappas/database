@@ -233,6 +233,32 @@ exports.getUserBooks = (req, res, next) => {
 
 }
 
+<<<<<<< HEAD
+// Controller function for submitting a review for a book
+exports.submitReview = (req, res, next) => {
+  const isbn = req.body.isbn;
+  const userId = req.session.userId;
+  const review_text = req.body.review_text;
+  const rating = req.body.rating;
+  const sqlQuery = `INSERT INTO Review (isbn, user_id, review_text, rating, approved, created_at ) VALUES (?, ?, ?, ?, '0', NOW())`;
+
+  pool.getConnection((err, conn) => {
+    if (err) {
+      console.error('Error acquiring database connection:', err);
+      return next(err);
+    }
+
+    conn.promise()
+      .query(sqlQuery, [isbn, userId, review_text, rating])
+      .then(() => {
+        res.redirect('/books/users');
+      })
+      .then(() => pool.releaseConnection(conn))
+      .catch((err) => {
+        console.error('Error executing SQL query:', err);
+  
+      });
+=======
 exports.addReservation = (req, res, next) => {
   let messages = req.flash("messages");
   if (messages.length == 0) messages = [];
@@ -333,5 +359,6 @@ exports.addReservation = (req, res, next) => {
         });
       });
     });
+>>>>>>> dba67b5a14786f3d40a11e11355ffcb49341c2ca
   });
 };
