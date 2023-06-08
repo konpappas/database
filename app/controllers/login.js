@@ -23,15 +23,16 @@ exports.postlogin = async(req, res) => {
                 //const role = req.session.user_type;
                 req.session.schoolId = user.school_id;// Store the school ID in session
                 req.session.userId= user.user_id;
+                req.session.usertype= role;
                 const approved = user.approved;
                 if(role === 'administrator')
                         res.redirect('/admin_layout');
                         else if (role === 'library_operator' && approved===1)
                             res.redirect('/operator_layout');
                             else if(role === 'student' && approved===1)
-                                 res.redirect('/student_layout');
+                                 res.redirect('/user_layout');
                                  else if(role === 'professor' && approved===1)
-                                     res.redirect('/prof_layout');
+                                     res.redirect('/user_layout');
                
             }else{
                 //res.send('Incorrect username / password');

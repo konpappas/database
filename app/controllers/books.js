@@ -16,8 +16,6 @@ exports.getBooks = (req, res, next) => {
                     JOIN author a ON b.author_id = a.author_id
                     JOIN category c ON b.category_id = c.category_id `;
 
-    sqlQuery += ' AND school_id = ?';
-    sqlParams.push(schoolId);
   
     if (searchFilter && searchTerm) {
       switch (searchFilter) {
@@ -39,6 +37,9 @@ exports.getBooks = (req, res, next) => {
           break;
       }
     }
+    
+    sqlQuery += ' AND school_id = ?';
+    sqlParams.push(schoolId);
     /* create the connection, execute query, render data */
     pool.getConnection((err, conn) => {
         if (err) {
@@ -65,7 +66,8 @@ exports.getBooks = (req, res, next) => {
 exports.updateBook = (req, res, next) => {
   const isbn = req.body.isbn;
   const updatedFields = {};
-
+  const category_name = req.body.name;
+  const author_name = req.body.author_name;
   // Check if each field is provided in the request body and add it to the updatedFields object
   if (req.body.title) {
     updatedFields.title = req.body.title;
@@ -92,17 +94,22 @@ exports.updateBook = (req, res, next) => {
   if (req.body.keywords) {
     updatedFields.keywords = req.body.keywords;
   }
-  if (req.body.category_id) {
-    updatedFields.category_id = req.body.category_id;
-  }
-  if (req.body.author_id) {
-    updatedFields.author_id = req.body.author_id;
-  }
-  if (req.body.school_id) {
-    updatedFields.school_id = req.body.school_id;
-  }
+
   const sqlParams = [];
-  let sqlQuery = 'UPDATE book SET';
+  let sqlQuery = 'UPDATE book';
+  if(category_name){
+    sqlQuery += ` 
+                SET book.category_id = (
+                SELECT category_id FROM category WHERE name = ?
+                ),`;
+                sqlParams.push(category_name);
+    }
+    if(author_name){
+      sqlQuery += ` book.author_id = (
+                  SELECT author_id FROM author WHERE CONCAT(first_name, ' ', last_name) = ?
+                  ),`;
+                  sqlParams.push(author_name);
+      }
 
   // Loop through the updatedFields object to build the SQL query and collect the corresponding parameter values
   Object.entries(updatedFields).forEach(([key, value], index) => {
@@ -125,10 +132,14 @@ exports.updateBook = (req, res, next) => {
       .query(sqlQuery, sqlParams)
       .then(() => {
         pool.releaseConnection(conn);
+        console.log('SQL Query:', sqlQuery);
+        console.log('SQL Parameters:', sqlParams);
         res.redirect('/books');
       })
       .catch(err => {
         console.error('Error updating book:', err);
+        console.log('SQL Query:', sqlQuery);
+        console.log('SQL Parameters:', sqlParams);
         next(err);
       });
   });
@@ -162,6 +173,62 @@ exports.postBook = (req, res, next) => {
           res.send(err);
           //res.redirect('/users');
       })
+  })
+
+}
+
+
+exports.getUserBooks = (req, res, next) => {
+
+  /* check for messages in order to show them when rendering the page */
+  let messages = req.flash("messages");
+  if (messages.length == 0) messages = [];
+
+  const { searchFilter, searchTerm } = req.query;
+  const sqlParams = [];
+  const schoolId = req.session.schoolId;
+
+  let sqlQuery = `SELECT b.isbn, b.title, b.publisher, b.pages, b.summary, b.available_copies, b.image, b.language, b.keywords, c.name, CONCAT(a.first_name, ' ', a.last_name) AS author_name
+                  FROM book b
+                  JOIN author a ON b.author_id = a.author_id
+                  JOIN category c ON b.category_id = c.category_id `;
+
+  if (searchFilter && searchTerm) {
+    switch (searchFilter) {
+      case 'title':
+        sqlQuery += ' WHERE b.title LIKE ?';
+        sqlParams.push(`%${searchTerm}%`);
+        break;
+      case 'name':
+        sqlQuery += ' WHERE c.name LIKE ?';
+        sqlParams.push(`%${searchTerm}%`);
+        break;
+      case 'author_name':
+        sqlQuery += ` WHERE CONCAT(a.first_name, ' ', a.last_name) LIKE ?`;
+        sqlParams.push(searchTerm);
+        break;
+    }
+  }
+  sqlQuery += ' AND school_id = ?';
+  sqlParams.push(schoolId);
+  /* create the connection, execute query, render data */
+  pool.getConnection((err, conn) => {
+      if (err) {
+          console.error('Error acquiring database connection:', err);
+          return next(err);
+        }
+      conn.promise().query(sqlQuery, sqlParams)
+      .then(([rows, books]) => {
+          res.render('book-details.ejs', {
+              pageTitle: "Books Page",
+              books: rows,
+              messages: messages,
+              searchFilter: searchFilter,
+              searchTerm: searchTerm
+            });
+      })
+      .then(() => pool.releaseConnection(conn))
+      .catch(err => console.log(err))
   })
 
 }
