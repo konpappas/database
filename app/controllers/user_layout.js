@@ -32,6 +32,19 @@ exports.getMyinfo = (req, res, next) => {
   });
 }
 
+exports.getMyReservations = (req, res, next) => {
+  res.render('userreservation.ejs', {
+      pageTitle: "My Reservations"
+  });
+}
+
+// exports.AddReservation = (req, res, next) =>{
+//   res.render('add-reservation.ejs',{
+//       pageTitle: "Make a reservation"
+//   })
+// }
+
+
 
 // Controller function for displaying book details
 /*exports.displayBookDetails = (req, res) => {

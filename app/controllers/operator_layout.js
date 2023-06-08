@@ -47,3 +47,9 @@ exports.getOperatorReservation = (req, res, next) =>{
         pageTitle: "Reservation View"
     })
 }
+
+exports.getAddBorrow = (req, res, next) =>{
+    res.render('add-borrow.ejs',{
+        pageTitle: "Insert a borrow"
+    })
+}
