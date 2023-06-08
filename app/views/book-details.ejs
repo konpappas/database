@@ -19,25 +19,15 @@
           <!-- Modal content-->
           <div class="modal-content">
             <div class="modal-header">
-              <h4 class="modal-title">Edit Books</h4>
+              <h4 class="modal-title">Review</h4>
             </div>
             <div class="modal-body">
-                <form id="modal-form" action="/update/:isbn" method="POST">
+                <form id="modal-form" action="users/submitreview/:isbn" method="POST">
                     <div style="text-align: center;">
                         <input type="text" name="isbn" id="isbn" readonly></br>
-                        <input type="text" name="title" id="title"></br>
-                        <input type="text" name="publisher" id="publisher"></br>
-                        <input type="text" name="pages" id="pages"></br>
-                     
-                        <input type="text" name="summary" id="summary"></br>
-                        <input type="text" name="available_copies" id="available_copies"></br>
-                        <!--<input type="text" name="image" id="image"></br>-->
-                        <input type="text" name="image" id="image" onchange="previewImage(this)"><br>
-                        <img id="image-preview" src="" alt="Image Preview"><br>
-                        <input type="text" name="language" id="language"></br>
-                        <input type="text" name="keywords" id="keywords"></br>
-                        <input type="text" name="category_id" id="category_id"></br>
-                        <input type="text" name="author_id" id="author_id">
+                        <input type="text" name="review_text" id="review_text"></br>
+                        <input type="text" name="rating" id="rating"></br>
+                
                    
                        <!-- <input type="text" name="program_id" id="program_id">-->
                     </div>
@@ -118,11 +108,8 @@
                                             <td>
                                                 <a type="button" style="cursor: pointer" onclick="setModalFields(this)"
                                                     data-toggle="modal" data-isbn="<%= Book.isbn %>" 
-                                                    data-title="<%= Book.title %>" data-publisher="<%= Book.publisher %>"
-                                                    data-pages="<%= Book.pages %>" data-summary="<%= Book.summary %>"
-                                                    data-available_copies="<%= Book.available_copies %>" data-image="<%= Book.image %>"
-                                                    data-language="<%= Book.language %>" data-keywords="<%= Book.keywords %>"
-                                                    data-category_id="<%= Book.category_id %>"  data-author_id="<%= Book.author_id %>"
+                                                    data-review_text="<%= Book.review_text %>" data-rating="<%= Book.rating %>"
+                                                   
                                                     data-target="#editModal">
                                                     <i class="fa fa-edit"></i>
                                                 </a>
@@ -140,18 +127,11 @@
     <script>
         function setModalFields(row) {
             document.getElementById("isbn").value = row.dataset.isbn;
-            document.getElementById("title").value = row.dataset.title;
-            document.getElementById("publisher").value = row.dataset.publisher;
-            document.getElementById("pages").value = row.dataset.pages;
-            document.getElementById("summary").value = row.dataset.summary;
-            document.getElementById("available_copies").value = row.dataset.available_copies;
-            document.getElementById("image").value = row.dataset.image;
-            document.getElementById("language").value = row.dataset.language;
-            document.getElementById("keywords").value = row.dataset.keywords;
-            document.getElementById("category_id").value = row.dataset.category_id;
-            document.getElementById("author_id").value = row.dataset.author_id;
+            document.getElementById("review_text").value = row.dataset.review_text;
+            document.getElementById("rating").value = row.dataset.rating;
 
-            document.getElementById("modal-form").action = "/books/update/" + row.dataset.isbn;
+
+            document.getElementById("modal-form").action = "/books/users/submitreview/" + row.dataset.isbn;
             document.getElementById("modal-form").method = "POST";
         }
             function previewImage(input) {

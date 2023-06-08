@@ -32,6 +32,12 @@ exports.getMyinfo = (req, res, next) => {
   });
 }
 
+exports.getReviews = (req, res, next) => {
+  res.render('reviews.ejs', {
+      pageTitle: "Reviews Page"
+  });
+}
+
 
 // Controller function for displaying book details
 /*exports.displayBookDetails = (req, res) => {

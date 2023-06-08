@@ -40,4 +40,11 @@ exports.getOperatorQuery3 = (req, res, next) =>{
     })
 }
 
+exports.getApproveReview = (req, res, next) =>{
+    res.render('reviewapprove.ejs',{
+        pageTitle: "Review Approval"
+    })
+}
+
+
 

@@ -6,6 +6,7 @@ router.get('/', UserlayoutController.getLanding);
 router.get('/books', UserlayoutController.getUserBooks);
 router.get('/books', UserlayoutController.getMyBooks);
 router.get('/users', UserlayoutController.getMyinfo);
+router.get('/reviews', UserlayoutController.getReviews);
 // Book routes
 //router.get('/books/:id', ProfessorlayoutController.displayBookDetails);
 //router.post('/books/:id/review', ProfessorlayoutController.submitReview);
