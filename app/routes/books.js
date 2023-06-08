@@ -9,6 +9,7 @@ router.post('/update/:isbn', booksController.updateBook);
 
 //user books
 router.get('/users', booksController.getUserBooks);
+router.post('/users/toReservation', booksController.addReservation);
 //router.get('/mybooks', booksController.getmyBooks);
 
 module.exports = router;
