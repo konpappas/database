@@ -12,193 +12,175 @@
 </head>
 
 <body>
-    
+
     <div id="editModal" class="modal fade" role="dialog">
         <div class="modal-dialog">
-      
-          
-          <div class="modal-content">
-            <div class="modal-header">
-<!---->
-              <h4 class="modal-title">Review</h4>
+
+
+            <div class="modal-content">
+                <div class="modal-header">
+                    <!-- Modal content for review -->
+                    <h4 class="modal-title">Review</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="modal-form" action="users/submitreview/:isbn" method="POST">
+                        <div style="text-align: center;">
+                            <input type="text" name="isbn" id="isbn" readonly><br>
+                            <input type="text" name="review_text" id="review_text"><br>
+                            <input type="text" name="rating" id="rating"><br>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" form="modal-form" class="btn btn-success" id="updateBtn1">Add</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
             </div>
-            <div class="modal-body">
-                <form id="modal-form" action="users/submitreview/:isbn" method="POST">
-                    <div style="text-align: center;">
-                        <input type="text" name="isbn" id="isbn" readonly></br>
-                        <input type="text" name="review_text" id="review_text"></br>
-                        <input type="text" name="rating" id="rating"></br>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="submit" form="modal-form" class="btn btn-success" id="updateBtn1">Add</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-          </div>
         </div>
     </div>
-          
+
     <div id="editModal1" class="modal fade" role="dialog">
         <div class="modal-dialog">
-            
-<!----> <div class="modal-content">
-             <div class="modal-header">
-              <h4 class="modal-title">Reservation Set</h4>
+            <!-- Modal content for reservation -->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Reservation Set</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="modal-form1" action="/toReservation" method="POST">
+                        <div style="text-align: center;">
+                            <input type="text" name="isbn" id="isbn1" readonly><br>
+                            <label for="add borrow">Add Reservation</label>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" form="modal-form1" class="btn btn-success" id="updateBtn2">Add</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
             </div>
-            <div class="modal-body">
-                <form id="modal-form1" action="/users/toReservation" method="POST">
-                    <div style="text-align: center;">
-                        <input type="text" name="isbn" id="isbn" readonly></br>
-                        <label for="add borrow">Add Reservation</label>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="submit" form="modal-form1" class="btn btn-success" id="updateBtn2">Add</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-          </div>
         </div>
     </div>
-           
-<!---->
 
-                   
-    
-
-    <%- include("includes/navbar_professor.ejs")%>
+    <% include("includes/navbar_professor.ejs")%>
 
     <div class="container">
         <div class="row" id="row">
             <div class="col-md-12">
                 <div class="card" id="card-container">
                     <div class="card-body" id="card">
-                    <% if (books.length == 0) { %> 
-                        <h1 style="margin-top: 5rem;">No Books found!</h1>
-                    <% } else { %>
-                        <div class="table-responsive">
-                             <!-- Add the search form with dropdown list -->
-                             <form action="/books/users" method="GET" class="mb-4">
-                                <div class="form-row">
-                                    <div class="col-md-4 mb-3">
-                                        <label for="searchFilter">Search Filter:</label>
-                                        <select class="form-control" name="searchFilter" id="searchFilter">
-                                            <option value="title">Title</option>
-                                            <option value="name">Category</option>
-                                            <option value="author_name">Author</option>
-                                  
-                                        </select>
+                        <% if (books.length == 0) { %>
+                            <h1 style="margin-top: 5rem;">No Books found!</h1>
+                        <% } else { %>
+                            <div class="table-responsive">
+                                <!-- Add the search form with dropdown list -->
+                                <form action="/books/users" method="GET" class="mb-4">
+                                    <div class="form-row">
+                                        <div class="col-md-4 mb-3">
+                                            <label for="searchFilter">Search Filter:</label>
+                                            <select class="form-control" name="searchFilter" id="searchFilter">
+                                                <option value="title">Title</option>
+                                                <option value="name">Category</option>
+                                                <option value="author_name">Author</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-8 mb-3">
+                                            <label for="searchTerm">Search Term:</label>
+                                            <input type="text" class="form-control" name="searchTerm" id="searchTerm">
+                                        </div>
                                     </div>
-                                    <div class="col-md-8 mb-3">
-                                        <label for="searchTerm">Search Term:</label>
-                                        <input type="text" class="form-control" name="searchTerm" id="searchTerm">
-                                    </div>
-                                </div>
-                                <button type="submit" class="btn btn-primary">Search</button>
-                            </form>
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>ISBN</th>
-                                        <th>Title</th>
-                                        <th>Publisher</th>
-                                        <th>Pages</th>
-                                        <th>Summary</th>
-                                        <th>Available Copies</th>
-                                        <th>Image</th>
-                                        <th>Language</th>
-                                        <th>Keywords</th>
-                                        <th>Category Name</th>
-                            
-                                        <th>Author Name</th>
-                                       
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <% books.forEach((Book, _) => { %>
+                                    <button type="submit" class="btn btn-primary">Search</button>
+                                </form>
+                                <table class="table">
+                                    <thead>
                                         <tr>
-                                            <td><%= Book.isbn %></td>
-                                            <td><%= Book.title %></td>
-                                            <td><%= Book.publisher %></td>
-                                            <td><%= Book.pages %></td>
-                                            <td><%= Book.summary %></td>
-                                            <td><%= Book.available_copies %></td>
-                                            <td><%= Book.image %></td>
-                                            <td><%= Book.language %></td>
-                                            <td><%= Book.keywords %></td>
-                                            <td><%= Book.name %></td>
-                                  
-                                            <td><%= Book.author_name %></td>
-                                            <td>
-                                                <a type="button" style="cursor: pointer" onclick="setModalFields(this)"
-
-                                                    data-toggle="modal" data-isbn="<%= Book.isbn %>" 
-                                                    data-review_text="<%= Book.review_text %>" data-rating="<%= Book.rating %>"
-                                                    data-target="#editModal">
-                                                    <i class="fa fa-edit"></i>
-                                                </a>
-                                            </td>   
-                                            <td>
-                                                <a type="button" style="cursor: pointer" onclick="setModalFields1(this)"
-                                                    data-toggle="modal" 
-                                                    data-isbn="<%= Book.isbn %>"
-                                                    data-target="#editModal1">
-                                                    <i class="fa fa-edit"></i>
-                                                </a>
-                                            </td>
-                                            
+                                            <th>ISBN</th>
+                                            <th>Title</th>
+                                            <th>Publisher</th>
+                                            <th>Pages</th>
+                                            <th>Summary</th>
+                                            <th>Available Copies</th>
+                                            <th>Image</th>
+                                            <th>Language</th>
+                                            <th>Keywords</th>
+                                            <th>Category Name</th>
+                                            <th>Author Name</th>
+                                            <th></th>
                                         </tr>
-                                    <% }) %>
-                                </tbody>
-                            </table>
-                        </div>
-                    <% } %>
+                                    </thead>
+                                    <tbody>
+                                        <% books.forEach((Book, _) => { %>
+                                            <tr>
+                                                <td><%= Book.isbn %></td>
+                                                <td><%= Book.title %></td>
+                                                <td><%= Book.publisher %></td>
+                                                <td><%= Book.pages %></td>
+                                                <td><%= Book.summary %></td>
+                                                <td><%= Book.available_copies %></td>
+                                                <td><%= Book.image %></td>
+                                                <td><%= Book.language %></td>
+                                                <td><%= Book.keywords %></td>
+                                                <td><%= Book.name %></td>
+                                                <td><%= Book.author_name %></td>
+                                                <td>
+                                                    <a type="button" style="cursor: pointer" onclick="setModalFields(this)"
+                                                        data-toggle="modal" data-isbn="<%= Book.isbn %>"
+                                                        data-review_text="<%= Book.review_text %>" data-rating="<%= Book.rating %>"
+                                                        data-target="#editModal">
+                                                        <i class="fa fa-edit"></i>
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a type="button" style="cursor: pointer" onclick="setModalFields1(this)"
+                                                        data-toggle="modal" data-isbn="<%= Book.isbn %>"
+                                                        data-target="#editModal1">
+                                                        <i class="fa fa-edit"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        <% }) %>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <% } %>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
 
     <script>
-       function setModalFields(row) {
+        function setModalFields(row) {
             document.getElementById("isbn").value = row.dataset.isbn;
-//
             document.getElementById("review_text").value = row.dataset.review_text;
             document.getElementById("rating").value = row.dataset.rating;
-
-
             document.getElementById("modal-form").action = "/books/users/submitreview/" + row.dataset.isbn;
-
-//
-
-        //    document.getElementById("modal-form").action = "/books/users/toReservation";
-//
             document.getElementById("modal-form").method = "POST";
         }
-        
     </script>
     <script>
         function setModalFields1(row) {
-             document.getElementById1("isbn").value = row.dataset.isbn;
+            document.getElementById("isbn1").value = row.dataset.isbn;
+            document.getElementById("modal-form1").action = "/books/users/toReservation";
+            document.getElementById("modal-form1").method = "POST";
+        }
+    </script>
 
-
-             document.getElementById1("modal-form1").action = "/books/users/toReservation" ;
-;
- 
-             document.getElementById1("modal-form1").method = "POST";
-         }
-         
-     </script>
- 
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
 
     <script src="/assets/js/jquery.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             toastr.options = {
                 "closeButton": true,
                 "positionClass": "toast-bottom-right",
@@ -208,26 +190,24 @@
             /* then to parse them back to JSON */
             let messages = '<%- JSON.stringify(messages) %>';
             messages = JSON.parse(messages);
-            messages.forEach(({
-                type,
-                value
-            }) => {
+            messages.forEach(({ type, value }) => {
                 switch (type) {
                     case 'error':
-                        toastr.error(value)
+                        toastr.error(value);
                         break;
                     case 'success':
-                        toastr.success(value)
+                        toastr.success(value);
                         break;
                     case 'warning':
-                        toastr.warning(value)
+                        toastr.warning(value);
                         break;
                     default:
-                        toastr.info(value)
+                        toastr.info(value);
                         break;
                 }
             });
-        })
+        });
     </script>
 </body>
+
 </html>

@@ -329,6 +329,7 @@ exports.addReservation = (req, res, next) => {
           const insertParams = [user_id, isbn];
 
           conn.query(insertQuery, insertParams, (err, insertResult) => {
+            console.log(insertQuery, insertParams)
             if (err) {
               // Handle the error
               conn.rollback(() => {
