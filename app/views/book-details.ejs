@@ -38,8 +38,7 @@
           </div>
         </div>
     </div>
-                   
-                       <!-- <input type="text" name="program_id" id="program_id">-->
+          
     <div id="editModal1" class="modal fade" role="dialog">
         <div class="modal-dialog">
             
@@ -48,9 +47,9 @@
               <h4 class="modal-title">Reservation Set</h4>
             </div>
             <div class="modal-body">
-                <form id="modal-form1" action="/toReservation" method="POST">
+                <form id="modal-form1" action="/users/toReservation" method="POST">
                     <div style="text-align: center;">
-                        <input type="text" name="isbn" id="isbn1" readonly></br>
+                        <input type="text" name="isbn" id="isbn" readonly></br>
                         <label for="add borrow">Add Reservation</label>
                     </div>
                 </form>
@@ -179,10 +178,11 @@
     </script>
     <script>
         function setModalFields1(row) {
-             document.getElementById1("isbn1").value = row.dataset.isbn;
+             document.getElementById1("isbn").value = row.dataset.isbn;
 
 
-             document.getElementById1("modal-form1").action = "/books/users/toReservation";
+             document.getElementById1("modal-form1").action = "/books/users/toReservation" ;
+;
  
              document.getElementById1("modal-form1").method = "POST";
          }
