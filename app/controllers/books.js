@@ -312,7 +312,8 @@ exports.addReservation = (req, res, next) => {
             });
             return;
           }
-
+          console.log(countQuery2);
+          console.log(countParams2);
           const copies = copiesResult[0].available_copies;
 
           if ((reservationCount >= 2 && role === 'student') || (reservationCount >= 1 && role === 'professor') || copies < 1) {
@@ -328,6 +329,7 @@ exports.addReservation = (req, res, next) => {
           const insertParams = [user_id, isbn];
 
           conn.query(insertQuery, insertParams, (err, insertResult) => {
+            console.log(insertQuery, insertParams)
             if (err) {
               // Handle the error
               conn.rollback(() => {
