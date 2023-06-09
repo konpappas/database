@@ -153,7 +153,7 @@ INSERT INTO User (username, password, first_name, last_name, email, user_type, s
 INSERT INTO User (username, password, first_name, last_name, email, user_type, school_id, approved, age) VALUES ('rdoig2','3Jc3Vn','Raychel','Doig','rdoig2@bbb.org','professor','5', '1','53');
 INSERT INTO User (username, password, first_name, last_name, email, user_type, school_id, approved, age) VALUES ('zforrestall3','bEFDabzgz4z','Zahara','Forrestall','zforrestall3@umich.edu','student','1', '1','13');
 INSERT INTO User (username, password, first_name, last_name, email, user_type, school_id, approved, age) VALUES ('ojeskin4','NO8Eplqsy','Opaline','Jeskin','ojeskin4@wikispaces.com','student','4', '1','14');
-INSERT INTO User (username, password, first_name, last_name, email, user_type, school_id, approved, age) VALUES ('boolahan5','8F2tmgoWIVBU','Bone','Oolahan','boolahan5@usnews.com','administrator','0', '1','59');
+INSERT INTO User (username, password, first_name, last_name, email, user_type, school_id, approved, age) VALUES ('boolahan5','8F2tmgoWIVBU','Bone','Oolahan','boolahan5@usnews.com','administrator','1', '1','59');
 INSERT INTO User (username, password, first_name, last_name, email, user_type, school_id, approved, age) VALUES ('wambler6','rG7BDuKzUBNJ','Waneta','Ambler','wambler6@addtoany.com','student','1', '1','13');
 INSERT INTO User (username, password, first_name, last_name, email, user_type, school_id, approved, age) VALUES ('dbynold7','LMsaZ87A3rMz','Dareen','Bynold','dbynold7@geocities.com','student','2', '1','13');
 INSERT INTO User (username, password, first_name, last_name, email, user_type, school_id, approved, age) VALUES ('sansell8','NPnx9FluLmP','Scarface','Ansell','sansell8@nifty.com','student','4', '1','17');
