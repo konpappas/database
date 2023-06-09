@@ -103,6 +103,8 @@ exports.getReviews = (req, res, next) => {
               searchFilter: searchFilter,
               searchTerm: searchTerm
             });
+            console.log(sqlQuery);
+            console.log(sqlParams);
       })
       .then(() => pool.releaseConnection(conn))
       .catch(err => console.log(err))
