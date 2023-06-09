@@ -368,3 +368,50 @@ exports.addReservation = (req, res, next) => {
 
   });
 };
+exports.getMyBooks = (req, res, next) => {
+  /* check for messages in order to show them when rendering the page */
+  let messages = req.flash("messages");
+  if (messages.length == 0) messages = [];
+
+  const { searchFilter, searchTerm } = req.query;
+  const sqlParams = [];
+  const schoolId = req.session.schoolId;
+  const userId = req.session.userId; // Assuming the user ID is stored in req.session.userId
+
+  let sqlQuery = `SELECT b.title, bo.borrowing_date, bo.returning_date
+                  FROM book b
+                  JOIN borrow bo ON b.isbn = bo.isbn
+                  JOIN user u ON bo.user_id = u.user_id
+                  WHERE bo.user_id = ? AND u.school_id = ?`;
+
+  sqlParams.push(userId, schoolId);
+
+  if (searchFilter && searchTerm) {
+    switch (searchFilter) {
+      case 'user_id':
+        sqlQuery += ' AND u.user_id = ?';
+        sqlParams.push(userId);
+        break;
+    }
+  }
+
+  /* create the connection, execute query, render data */
+  pool.getConnection((err, conn) => {
+    if (err) {
+      console.error('Error acquiring database connection:', err);
+      return next(err);
+    }
+    conn.promise().query(sqlQuery, sqlParams)
+      .then(([rows, books]) => {
+        res.render('mybooks.ejs', {
+          pageTitle: "My Borrowed Books Page",
+          books: rows,
+          messages: messages,
+          searchFilter: searchFilter,
+          searchTerm: searchTerm
+        });
+      })
+      .then(() => pool.releaseConnection(conn))
+      .catch(err => console.log(err))
+  })
+}
