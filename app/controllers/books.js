@@ -240,7 +240,11 @@ exports.submitReview = (req, res, next) => {
   const userId = req.session.userId;
   const review_text = req.body.review_text;
   const rating = req.body.rating;
-  const sqlQuery = `INSERT INTO Review (isbn, user_id, review_text, rating, approved, created_at ) VALUES (?, ?, ?, ?, '0', NOW())`;
+  const schoolId = req.session.schoolId;
+  const sqlQuery = `INSERT INTO Review (isbn, user_id, review_text, rating, approved, created_at, operator_id ) VALUES (?, ?, ?, ?, '0', NOW(),
+                                                                                                                (SELECT user_id FROM user 
+                                                                                                                  WHERE user_type= 'library_operator' 
+                                                                                                                  AND school_id = '${schoolId}'))`;
 
   pool.getConnection((err, conn) => {
     if (err) {

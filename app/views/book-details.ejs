@@ -32,7 +32,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="submit" form="modal-form" class="btn btn-success">Add</button>
+                <button type="submit" form="modal-form" class="btn btn-success" id="updateBtn1">Add</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
           </div>
@@ -48,15 +48,15 @@
               <h4 class="modal-title">Reservation Set</h4>
             </div>
             <div class="modal-body">
-                <form id="modal-form" action="/toReservation" method="POST">
+                <form id="modal-form1" action="/toReservation" method="POST">
                     <div style="text-align: center;">
-                        <input type="text" name="isbn" id="isbn" readonly></br>
+                        <input type="text" name="isbn" id="isbn1" readonly></br>
                         <label for="add borrow">Add Reservation</label>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="submit" form="modal-form" class="btn btn-success">Add</button>
+                <button type="submit" form="modal-form1" class="btn btn-success" id="updateBtn2">Add</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
           </div>
@@ -142,7 +142,7 @@
                                                 </a>
                                             </td>   
                                             <td>
-                                                <a type="button" style="cursor: pointer" onclick="setModalFields(this)"
+                                                <a type="button" style="cursor: pointer" onclick="setModalFields1(this)"
                                                     data-toggle="modal" 
                                                     data-isbn="<%= Book.isbn %>"
                                                     data-target="#editModal1">
@@ -178,15 +178,13 @@
         
     </script>
     <script>
-        function setModalFields(row) {
-             document.getElementById("isbn").value = row.dataset.isbn;
- 
-             document.getElementById("review_text").value = row.dataset.review_text;
-             document.getElementById("rating").value = row.dataset.rating;
+        function setModalFields1(row) {
+             document.getElementById1("isbn1").value = row.dataset.isbn;
 
-             document.getElementById("modal-form").action = "/books/users/toReservation";
+
+             document.getElementById1("modal-form1").action = "/books/users/toReservation";
  
-             document.getElementById("modal-form").method = "POST";
+             document.getElementById1("modal-form1").method = "POST";
          }
          
      </script>

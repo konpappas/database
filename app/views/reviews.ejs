@@ -13,18 +13,6 @@
 
 <body>
     
-    <div id="editModal" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-      
-          <!-- Modal content-->
-          <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title">View Reviews</h4>
-            </div>
-            
-          </div>
-        </div>
-    </div>
 
     <%- include("includes/navbar_professor.ejs")%>
 
@@ -75,14 +63,7 @@
                                             <td><%= Review.title %></td>
                                             <td><%= Review.created_at %></td>
                                             <td>
-                                                <a type="button" style="cursor: pointer" onclick="setModalFields(this)"
-                                                    data-toggle="modal" data-review_id="<%= Review.review_id %>" 
-                                                    data-review_text="<%= Review.review_text %>" data-rating="<%= Review.rating %>"
-                                                    data-title="<%= Review.title %>" data-created_at="<%= Review.created_at %>"
-                                                    
-                                                    data-target="#editModal">
-                                                    <i class="fa fa-edit"></i>
-                                                </a>
+                                                
                                             </td>
                                             
                                         </tr>
